@@ -1,0 +1,58 @@
+{#
+ * @copyright 2023 City of Bloomington, Indiana
+ * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
+ * @param array service  Open311 Service information array
+#}
+{% extends "html/layouts/default.twig" %}
+
+{% block content %}
+<section>
+    <header>
+        <h2>{{ service.group }}</h2>
+        <h3>{{ service.service_name }}</h3>
+    </header>
+
+    <form method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Service request location:</legend>
+            <input name="address_string" id="address_string" type="hidden" value="" />
+            <input name="lat"            id="lat"            type="hidden" value="" />
+            <input name="long"           id="long"           type="hidden" value="" />
+        </fieldset>
+        <fieldset>
+            <legend>General information:</legend>
+            <div>
+                <label  for="media">Include Image:</label>
+                <input name="media" id="media" type="file" accept="image/*" />
+            </div>
+            <div>
+                <label for="description">Describe this issue:</label>
+                <textarea name="description" id="description"></textarea>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Your Information</legend>
+            <p>By leaving the fields below empty, <strong>you may submit anonymously</strong>.</p>
+            <p><strong>Note:</strong> <i>Information you provide through uReport is stored and retained by the City as a public record.</i></p>
+
+            <div>
+                <label  for="firstname">First Name:</label>
+                <input name="firstname" id="firstname" placeholder="First Name" />
+            </div>
+            <div>
+                <label for="lastname">Last Name:</label>
+                <input name="lastname" id="lastname" placeholder="Last Name" />
+            </div>
+            <div>
+                <label for="phone">Phone:</label>
+                <input name="phone" id="phone" type="tel" />
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input name="email" id="email" type="email" />
+            </div>
+        </fieldset>
+    </form>
+
+</section>
+{% endblock %}

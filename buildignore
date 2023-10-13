@@ -1,0 +1,10 @@
+buildignore
+build
+dist
+.git/
+.git*
+site_config.php
+backup.cnf
+data/sessions/*
+public/COB
+.sass-cache

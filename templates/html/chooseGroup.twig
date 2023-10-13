@@ -1,0 +1,18 @@
+{#
+ * @copyright 2023 City of Bloomington, Indiana
+ * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
+ * @param array groups
+#}
+{% extends "html/layouts/default.twig" %}
+
+{% block content %}
+<section>
+{% for code, group in groups %}
+    <div>
+        <a href="{{ uri('home.group', {'group_code':code}) }}">
+            <h3>{{ group }}</h3>
+        </a>
+    </div>
+{% endfor %}
+</section>
+{% endblock %}

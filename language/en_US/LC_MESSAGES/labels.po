@@ -1,0 +1,130 @@
+# Translation
+# Copyright (C) 2020 City of Bloomington
+# This file is distributed under the same license as Monroe.
+domain "labels"
+
+msgid ""
+msgstr ""
+"Project-Id-Version: Monroe\n"
+"Report-Msgid-Bugs-To: dev@bloomington.in.gov\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Cliff Ingham <inghamn@bloomington.in.gov>\n"
+"Language-Team: City of Bloomington <dev@bloomington.in.gov>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en_US\n"
+
+msgid "home"
+msgstr "Home"
+
+msgid "add"
+msgstr "Add"
+
+msgid "edit"
+msgstr "Edit"
+
+msgid "delete"
+msgstr "Delete"
+
+msgid "search"
+msgstr "Search"
+
+msgid "submit"
+msgstr "Submit"
+
+msgid "save"
+msgstr "Save"
+
+msgid "cancel"
+msgstr "Cancel"
+
+#. This is the short form for "Administrator".  This should be an abbreviation
+msgid "admin"
+msgstr "Admin"
+
+msgid "login"
+msgstr "Login"
+
+msgid "logout"
+msgstr "Logout"
+
+msgid "help"
+msgstr "Help"
+
+msgid "code"
+msgstr "Code"
+
+msgid "name"
+msgstr "Name"
+
+msgid "firstname"
+msgstr "First Name"
+
+msgid "middlename"
+msgstr "Middle Name"
+
+msgid "lastname"
+msgstr "Last Name"
+
+msgid "username"
+msgstr "Username"
+
+msgid "password"
+msgstr "Password"
+
+msgid "authentication_method"
+msgstr "Authentication"
+
+msgid "role"
+msgstr "Role"
+
+msgid "email"
+msgid_plural "emails"
+msgstr[0] "Email"
+msgstr[1] "Email Addresses"
+
+msgid "person"
+msgid_plural "people"
+msgstr[0] "Person"
+msgstr[1] "People"
+
+msgid "user"
+msgid_plural "users"
+msgstr[0] "User Account"
+msgstr[1] "User Accounts"
+
+msgid "person_info"
+msgstr "Person Info"
+
+msgid "person_add"
+msgstr "Add a Person"
+
+msgid "person_edit"
+msgstr "Edit Person"
+
+msgid "user_add"
+msgstr "Create Account"
+
+msgid "user_edit"
+msgstr "Edit Account"
+
+msgid "user_delete"
+msgstr "Delete Account"
+
+msgid "user_info"
+msgstr "Account Info"
+
+msgid "my_account"
+msgstr "My Account"
+
+msgid "employee"
+msgid_plural "employees"
+msgstr[0] "Employee"
+msgstr[1] "Employees"
+
+msgid "profile"
+msgid_plural "profiles"
+msgstr[0] "Profile"
+msgstr[1] "Profiles"

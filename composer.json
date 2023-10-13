@@ -1,0 +1,26 @@
+{
+    "require": {
+        "php": ">=8.1",
+        "aura/di":                         "@stable",
+        "aura/router":                     "@stable",
+        "apereo/phpcas":                   "@stable",
+        "guzzlehttp/guzzle":               "@stable",
+        "graylog2/gelf-php":               "@stable",
+        "laminas/laminas-log":             "@stable",
+        "twig/twig":                       "@stable"
+    },
+    "require-dev": {
+        "phpunit/phpunit":                 "@stable"
+    },
+    "autoload": {
+        "psr-4": {
+            "Web\\":    "src/Web",
+            "Domain\\": "src/Domain"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "src/Test"
+        }
+    }
+}
