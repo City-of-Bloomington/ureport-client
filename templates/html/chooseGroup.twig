@@ -6,13 +6,13 @@
 {% extends "html/layouts/default.twig" %}
 
 {% block content %}
-<section>
-{% for code, group in groups %}
+<section id="chooseGroup">
+    {% for code, group in groups %}
     <div>
-        <a href="{{ uri('home.group', {'group_code':code}) }}">
-            <h3>{{ group }}</h3>
-        </a>
+        <a href="{{ uri('home.group', {'group_code':code}) }}">{{ group }}</a>
     </div>
-{% endfor %}
+    {% endfor %}
+
+    <p><strong>Note:</strong> If an Emergency, dial 911.</p>
 </section>
 {% endblock %}

@@ -5,5 +5,6 @@ ansible/roles
 data/sessions/*
 *.cache
 *.css*
+*-*.js
 *.mo
 make.conf

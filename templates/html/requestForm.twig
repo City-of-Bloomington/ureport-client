@@ -1,23 +1,28 @@
 {#
- * @copyright 2023 City of Bloomington, Indiana
+ * @copyright 2024 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
- * @param array service  Open311 Service information array
+ * @param array  service             Open311 Service information array
+ * @param string google_maps_api_key
+ * @param float  default_latitude
+ * @param float  default_longitude
 #}
 {% extends "html/layouts/default.twig" %}
 
 {% block content %}
-<section>
+<section id="requestForm">
     <header>
         <h2>{{ service.group }}</h2>
         <h3>{{ service.service_name }}</h3>
     </header>
 
     <form method="post" enctype="multipart/form-data">
-        <fieldset>
+        <fieldset id="location_info">
             <legend>Service request location:</legend>
             <input name="address_string" id="address_string" type="hidden" value="" />
             <input name="lat"            id="lat"            type="hidden" value="" />
             <input name="long"           id="long"           type="hidden" value="" />
+            <div id="map"></div>
+            <div id="crosshairs"></div>
         </fieldset>
         <fieldset>
             <legend>General information:</legend>
@@ -55,4 +60,11 @@
     </form>
 
 </section>
+<script>
+    const DEFAULT_LATITUDE  = {{ default_latitude }},
+          DEFAULT_LONGITUDE = {{ default_longitude }};
+</script>
+<script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&loading=async&callback=initMap"></script>
+<script src="{{ BASE_URI }}/js/map.js"></script>
+
 {% endblock %}

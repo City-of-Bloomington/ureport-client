@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ LANG }}" lang="{{ LANG }}">
-{{ include('html/layouts/partials/head.twig') }}
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ BASE_URI }}/css/screen-{{ VERSION }}.css" />
+    <title>{{ title is defined ? title : APPLICATION_NAME }}</title>
+    <script type="text/javascript">
+        var BASE_URL = '{{ BASE_URL }}',
+            BASE_URI = '{{ BASE_URI }}';
+    </script>
+</head>
 
 <body class="full-width">
-    {{ include('html/layouts/partials/header.twig') }}
+    <header>
+        <h1><a href="{{ BASE_URI }}">{{ APPLICATION_NAME }}</a></h1>
+    </header>
 	<main>
         <div id="content-panel" class="panel">
             {% if errorMessages is defined %}
@@ -14,6 +25,7 @@
             {% endblock %}
         </div>
 	</main>
-	{{ include('html/layouts/partials/footer.twig') }}
+    <footer>
+    </footer>
 </body>
 </html>

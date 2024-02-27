@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2023 City of Bloomington, Indiana
+ * @copyright 2024 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  */
 /**
@@ -18,6 +18,7 @@ session_start();
 
 $matcher = $ROUTES->getMatcher();
 $route   = $matcher->match(GuzzleHttp\Psr7\ServerRequest::fromGlobals());
+$view    = null;
 
 if ($route) {
     $controller = $route->handler;
@@ -25,12 +26,9 @@ if ($route) {
     if (is_callable($c)) {
         $view = $c($route->attributes);
     }
-    else {
-        $f = $matcher->getFailedRoute();
-        $view = new \Web\Views\NotFoundView();
-    }
 }
-else {
+
+if (!$view) {
     $f = $matcher->getFailedRoute();
     $view = new \Web\Views\NotFoundView();
 }
