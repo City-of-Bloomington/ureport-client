@@ -16,13 +16,15 @@
     </header>
 
     <form method="post" enctype="multipart/form-data">
-        <fieldset id="location_info">
+        <fieldset>
             <legend>Service request location:</legend>
-            <input name="address_string" id="address_string" type="hidden" value="" />
+            <div id="map_container">
+                <div id="map"></div>
+                <div id="crosshairs"></div>
+            </div>
+            <input name="address_string" id="address_string" value="" />
             <input name="lat"            id="lat"            type="hidden" value="" />
             <input name="long"           id="long"           type="hidden" value="" />
-            <div id="map"></div>
-            <div id="crosshairs"></div>
         </fieldset>
         <fieldset>
             <legend>General information:</legend>
@@ -64,7 +66,7 @@
     const DEFAULT_LATITUDE  = {{ default_latitude }},
           DEFAULT_LONGITUDE = {{ default_longitude }};
 </script>
-<script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&loading=async&callback=initMap"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?libraries=maps,places&key={{ google_maps_api_key }}&v=weekly&callback=initMap"></script>
 <script src="{{ BASE_URI }}/js/map.js"></script>
 
 {% endblock %}
