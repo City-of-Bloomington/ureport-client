@@ -59,6 +59,9 @@
                 <input name="email" id="email" type="email" />
             </div>
         </fieldset>
+        <fieldset>
+            <button type="submit">Submit</button>
+        </fieldset>
     </form>
 
 </section>
@@ -68,5 +71,6 @@
 </script>
 <script async src="https://maps.googleapis.com/maps/api/js?libraries=maps,places&key={{ google_maps_api_key }}&v=weekly&callback=initMap"></script>
 <script src="{{ BASE_URI }}/js/map.js"></script>
+<script src="{{ BASE_URI }}/js/form.js"></script>
 
 {% endblock %}
