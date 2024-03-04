@@ -13,4 +13,16 @@ function validate() {
     media.setCustomValidity('');
     return true;
 }
-document.getElementById('media').onchange = validate;
+
+
+function saveInput(event) {
+    let input = event.target;
+    localStorage.setItem(input.getAttribute('id'), input.value);
+}
+
+for (const f of ['firstname', 'lastname', 'email', 'phone']) {
+    let i = document.getElementById(f);
+
+    i.value = localStorage.getItem(f);
+    i.addEventListener('change', saveInput);
+}

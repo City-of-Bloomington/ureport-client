@@ -11,8 +11,9 @@
 {% block content %}
 <section id="requestForm">
     <header>
-        <h2>{{ service.group }}</h2>
+        <h2>{{ service.group        }}</h2>
         <h3>{{ service.service_name }}</h3>
+         <p>{{ service.description  }}</p>
     </header>
 
     <form method="post" enctype="multipart/form-data">
