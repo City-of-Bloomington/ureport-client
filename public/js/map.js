@@ -37,6 +37,9 @@ function initMap()
         document.getElementById('long').value = p.geometry.location.lng();
         map.setCenter(p.geometry.location);
     });
+    document.getElementById('address_string').addEventListener('keydown', (e) => {
+        if (e.keyCode == 13) { e.preventDefault(); }
+    });
 }
 
 function chooseLocation()

@@ -1,0 +1,16 @@
+{#
+ * @copyright 2024 City of Bloomington, Indiana
+ * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
+ * @param int service_request_id
+ #}
+{% extends "html/layouts/default.twig" %}
+{% block content %}
+<section>
+    <header>
+        <h2>Thanks for the report!</h2>
+        <h3>Service Request ID: {{ service_request_id }}</h3>
+    </header>
+    <a href="https://bloomington.in.gov/crm/tickets/view?ticket_id={{ service_request_id }}">View Ticket</a>
+</section>
+
+{% endblock %}

@@ -16,8 +16,8 @@ class ContactInfoController extends Controller
         $open311 = $this->di->get('Web\Open311Gateway');
         $service = $open311->getService($params['service_code']);
         if ($service) {
-            if (isset($_POST['firstname'])) {
-                foreach (['firstname', 'lastname', 'email', 'phone'] as $f) {
+            if (isset($_POST['first_name'])) {
+                foreach (['first_name', 'last_name', 'email', 'phone'] as $f) {
                     $_SESSION[$f] = $_POST[$f];
                 }
                 $requestForm  = View::generateUrl('home.request', [

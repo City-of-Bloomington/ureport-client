@@ -7,8 +7,8 @@
  * @param string google_maps_api_key
  * @param float  default_latitude
  * @param float  default_longitude
- * @param string firstname
- * @param string lastname
+ * @param string first_name
+ * @param string last_name
  * @param string email
  * @param string phone
 #}
@@ -80,10 +80,10 @@
         {% endif %}
 
         <fieldset>
-            <input type="hidden" name="firstname"    value="{{ firstname }}" />
-            <input type="hidden" name="lastname"     value="{{ lastname  }}" />
-            <input type="hidden" name="phone"        value="{{ phone     }}" />
-            <input type="hidden" name="email"        value="{{ email     }}" />
+            <input type="hidden" name="first_name"   value="{{ first_name }}" />
+            <input type="hidden" name="last_name"    value="{{ last_name  }}" />
+            <input type="hidden" name="phone"        value="{{ phone      }}" />
+            <input type="hidden" name="email"        value="{{ email      }}" />
             <input type="hidden" name="service_code" value="{{ service.service_code }}" />
             <button type="submit">Submit</button>
         </fieldset>

@@ -26,12 +26,12 @@
             <p><strong>Note:</strong> <i>Information you provide through uReport is stored and retained by the City as a public record.</i></p>
 
             <div>
-                <label  for="firstname">First Name:</label>
-                <input name="firstname" id="firstname" placeholder="First Name" />
+                <label  for="first_name">First Name:</label>
+                <input name="first_name" id="first_name" placeholder="First Name" />
             </div>
             <div>
-                <label for="lastname">Last Name:</label>
-                <input name="lastname" id="lastname" placeholder="Last Name" />
+                <label for="last_name">Last Name:</label>
+                <input name="last_name" id="last_name" placeholder="Last Name" />
             </div>
             <div>
                 <label for="phone">Phone:</label>
@@ -50,7 +50,7 @@ function saveInput(event) {
     let input = event.target;
     localStorage.setItem(input.getAttribute('id'), input.value);
 }
-for (const f of ['firstname', 'lastname', 'email', 'phone']) {
+for (const f of ['first_name', 'last_name', 'email', 'phone']) {
     let i = document.getElementById(f);
 
     i.value = localStorage.getItem(f);

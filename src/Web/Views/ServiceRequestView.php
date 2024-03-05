@@ -20,10 +20,10 @@ class ServiceRequestView extends View
             'google_maps_api_key' => GOOGLE_MAPS_API_KEY,
             'default_latitude'    => ini_get('date.default_latitude'),
             'default_longitude'   => ini_get('date.default_longitude'),
-            'firstname'           => $_SESSION['firstname'] ?? '',
-            'lastname'            => $_SESSION['lastname' ] ?? '',
-            'email'               => $_SESSION['email'    ] ?? '',
-            'phone'               => $_SESSION['phone'    ] ?? ''
+            'first_name'          => $_SESSION['first_name'] ?? '',
+            'last_name'           => $_SESSION['last_name' ] ?? '',
+            'email'               => $_SESSION['email'     ] ?? '',
+            'phone'               => $_SESSION['phone'     ] ?? ''
         ];
         if (isset($_SESSION['errorMessages'])) {
             foreach ($_SESSION['errorMessages'] as $e) {

@@ -109,36 +109,36 @@ class Open311Gateway
 
 	public function getServiceRequest(string $service_request_id): array
 	{
-		return $this->queryServer("{$this->getUrl()}/requests/$service_request_id.json");
+		return $this->queryServer("{$this->url}/requests/$service_request_id.json");
 	}
 
 	/**
-	 * @param  array    $post
+	 * @param  array    $post   $_POST array
+	 * @param  array    $file   $_FILES entry for file upload
 	 * @return array    JSON response from Open311 server
 	 */
-	public function postServiceRequest(array $post): array
+	public function postServiceRequest(array $post, array $file=null): array
 	{
 		$request = [
 			'jurisdiction_id' => $this->jurisdiction_id,
 			'api_key'         => $this->api_key,
-			'service_code'    => $_POST['service_code']
+			'service_code'    => $post['service_code']
 		];
-		foreach (self::$optionalOpen311Fields as $field) {
-			if (!empty($_POST[$field])) {
-				$request[$field] = $_POST[$field];
-			}
+		$open311Fields = ['address_string', 'lat', 'long', 'description',
+		                  'first_name', 'last_name', 'phone', 'email'];
+		foreach ($open311Fields as $f) {
+			if (!empty($post[$f])) { $request[$f] = $post[$f]; }
 		}
-		$service = $this->getServiceDefinition($post['service_code']);
-		if ($service && !empty($service['attributes'])) {
-			foreach ($service['attributes']['attribute'] as $a) {
+
+		$def = $this->getServiceDefinition($post['service_code']);
+		if ($def && !empty($def['attributes'])) {
+			foreach ($def['attributes'] as $a) {
 				$code = $a['code'];
-				if (isset($_POST['attribute'][$code])) {
-					$request['attribute'][$code] = $_POST['attribute'][$code];
-				}
+				if (!empty($post[$code])) { $request['attribute'][$code] = $post[$code]; }
 			}
 		}
-		if (!empty($_FILES['media']['name'])) {
-            $request['media'] = new \CURLFile($_FILES['media']['tmp_name'], $_FILES['media']['type'], $_FILES['media']['name']);
+		if (!empty($file['name']) && !empty($file['tmp_name'])) {
+            $request['media'] = new \CURLFile($file['tmp_name'], $file['type'], $file['name']);
 		}
 		$open311 = curl_init("{$this->url}/requests.json");
 		curl_setopt_array($open311, [
