@@ -8,11 +8,12 @@ namespace Web\Views;
 
 class ContactInfoView extends \Web\View
 {
-    public function __construct(array $service)
+    public function __construct(array $service, string $group_code)
     {
         parent::__construct();
         $this->vars = [
-            'service' => $service
+            'service'    => $service,
+            'group_code' => $group_code
         ];
     }
 

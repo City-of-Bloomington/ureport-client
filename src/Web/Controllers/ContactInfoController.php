@@ -16,7 +16,6 @@ class ContactInfoController extends Controller
         $open311 = $this->di->get('Web\Open311Gateway');
         $service = $open311->getService($params['service_code']);
         if ($service) {
-
             if (isset($_POST['firstname'])) {
                 foreach (['firstname', 'lastname', 'email', 'phone'] as $f) {
                     $_SESSION[$f] = $_POST[$f];
@@ -28,7 +27,7 @@ class ContactInfoController extends Controller
                 header("Location: $requestForm");
                 exit();
             }
-            return new \Web\Views\ContactInfoView($service);
+            return new \Web\Views\ContactInfoView($service, $params['group_code']);
         }
         return new \Web\Views\NotFoundView();
     }

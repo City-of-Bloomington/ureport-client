@@ -9,7 +9,15 @@
 
 {% block content %}
 <section id="chooseService">
-    <h2>{{ group_name }}</h2>
+    <header>
+        <nav>Progress:
+            <a href="{{ uri('home.index') }}">1</a>
+            <a inert="true" class="current">2</a>
+            <a inert="true">3</a>
+            <a inert="true">4</a>
+        </nav>
+        <h2>{{ group_name }}</h2>
+    </header>
     <ul>
     {% for s in services %}
         <li><a href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':group_code}) }}">

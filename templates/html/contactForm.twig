@@ -1,12 +1,19 @@
 {#
  * @copyright 2024 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
- * @param array data
+ * @param array  service             Open311 Service information array
+ * @param string group_code
  #}
 {% extends "html/layouts/default.twig" %}
 {% block content %}
 <section>
     <header>
+        <nav>Progress:
+            <a href="{{ uri('home.index') }}">1</a>
+            <a href="{{ uri('home.service', {'group_code':group_code}) }}">2</a>
+            <a inert="true" class="current">3</a>
+            <a inert="true">4</a>
+        </nav>
         <h2>{{ service.group        }}</h2>
         <h3>{{ service.service_name }}</h3>
          <p>{{ service.description  }}</p>

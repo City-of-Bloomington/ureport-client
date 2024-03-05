@@ -3,6 +3,7 @@
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  * @param array  service             Open311 Service information array
  * @param array  attributes          Open311 definition of custom fields
+ * @param string group_code
  * @param string google_maps_api_key
  * @param float  default_latitude
  * @param float  default_longitude
@@ -16,6 +17,12 @@
 {% block content %}
 <section id="requestForm">
     <header>
+        <nav>Progress:
+            <a href="{{ uri('home.index') }}">1</a>
+            <a href="{{ uri('home.service', {'group_code':group_code}) }}">2</a>
+            <a href="{{ uri('home.contact', {'group_code':group_code, 'service_code':service.service_code}) }}">3</a>
+            <a inert="true" class="current">4</a>
+        </nav>
         <h2>{{ service.group        }}</h2>
         <h3>{{ service.service_name }}</h3>
          <p>{{ service.description  }}</p>
@@ -28,6 +35,7 @@
                 <div id="map"></div>
                 <div id="crosshairs"></div>
             </div>
+            <label for="address_string">Address</label>
             <input name="address_string" id="address_string" value="" />
             <input name="lat"            id="lat"            type="hidden" value="" />
             <input name="long"           id="long"           type="hidden" value="" />

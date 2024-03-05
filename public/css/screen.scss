@@ -13,3 +13,6 @@
 }
 
 #media:invalid { background-color: #600; }
+
+a[class="current"] { font-weight: bold; }
+a[inert] { color: gray; }

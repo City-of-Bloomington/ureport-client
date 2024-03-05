@@ -10,12 +10,13 @@ use Web\View;
 
 class ServiceRequestView extends View
 {
-    public function __construct(array $service, array $definition)
+    public function __construct(array $service, array $definition, string $group_code)
     {
         parent::__construct();
         $this->vars = [
             'service'             => $service,
             'attributes'          => $definition['attributes'] ?? null,
+            'group_code'          => $group_code,
             'google_maps_api_key' => GOOGLE_MAPS_API_KEY,
             'default_latitude'    => ini_get('date.default_latitude'),
             'default_longitude'   => ini_get('date.default_longitude'),
@@ -24,6 +25,12 @@ class ServiceRequestView extends View
             'email'               => $_SESSION['email'    ] ?? '',
             'phone'               => $_SESSION['phone'    ] ?? ''
         ];
+        if (isset($_SESSION['errorMessages'])) {
+            foreach ($_SESSION['errorMessages'] as $e) {
+                $this->vars['errorMessages'][] = $e->getMessage();
+            }
+        }
+        unset($_SESSION['errorMessages']);
     }
 
     public function render(): string
