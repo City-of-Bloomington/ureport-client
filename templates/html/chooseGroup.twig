@@ -1,5 +1,5 @@
 {#
- * @copyright 2023 City of Bloomington, Indiana
+ * @copyright 2024 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  * @param array groups
 #}
@@ -9,7 +9,7 @@
 <section id="chooseGroup">
     {% for code, group in groups %}
     <div>
-        <a href="{{ uri('home.group', {'group_code':code}) }}">{{ group }}</a>
+        <a href="{{ uri('home.service', {'group_code':code}) }}">{{ group }}</a>
     </div>
     {% endfor %}
 

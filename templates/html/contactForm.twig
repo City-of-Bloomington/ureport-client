@@ -1,0 +1,54 @@
+{#
+ * @copyright 2024 City of Bloomington, Indiana
+ * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
+ * @param array data
+ #}
+{% extends "html/layouts/default.twig" %}
+{% block content %}
+<section>
+    <header>
+        <h2>{{ service.group        }}</h2>
+        <h3>{{ service.service_name }}</h3>
+         <p>{{ service.description  }}</p>
+    </header>
+
+    <form method="post">
+        <fieldset>
+            <legend>Contact Information</legend>
+            <p>By leaving the fields below empty, <strong>you may submit anonymously</strong>.</p>
+            <p><strong>Note:</strong> <i>Information you provide through uReport is stored and retained by the City as a public record.</i></p>
+
+            <div>
+                <label  for="firstname">First Name:</label>
+                <input name="firstname" id="firstname" placeholder="First Name" />
+            </div>
+            <div>
+                <label for="lastname">Last Name:</label>
+                <input name="lastname" id="lastname" placeholder="Last Name" />
+            </div>
+            <div>
+                <label for="phone">Phone:</label>
+                <input name="phone" id="phone" type="tel" />
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input name="email" id="email" type="email" />
+            </div>
+            <button type="submit">Next</button>
+        </fieldset>
+    </form>
+</section>
+<script>
+function saveInput(event) {
+    let input = event.target;
+    localStorage.setItem(input.getAttribute('id'), input.value);
+}
+for (const f of ['firstname', 'lastname', 'email', 'phone']) {
+    let i = document.getElementById(f);
+
+    i.value = localStorage.getItem(f);
+    i.addEventListener('change', saveInput);
+}
+</script>
+
+{% endblock %}

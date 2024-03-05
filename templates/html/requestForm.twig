@@ -2,9 +2,14 @@
  * @copyright 2024 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  * @param array  service             Open311 Service information array
+ * @param array  attributes          Open311 definition of custom fields
  * @param string google_maps_api_key
  * @param float  default_latitude
  * @param float  default_longitude
+ * @param string firstname
+ * @param string lastname
+ * @param string email
+ * @param string phone
 #}
 {% extends "html/layouts/default.twig" %}
 
@@ -38,29 +43,40 @@
                 <textarea name="description" id="description"></textarea>
             </div>
         </fieldset>
-        <fieldset>
-            <legend>Your Information</legend>
-            <p>By leaving the fields below empty, <strong>you may submit anonymously</strong>.</p>
-            <p><strong>Note:</strong> <i>Information you provide through uReport is stored and retained by the City as a public record.</i></p>
 
-            <div>
-                <label  for="firstname">First Name:</label>
-                <input name="firstname" id="firstname" placeholder="First Name" />
-            </div>
-            <div>
-                <label for="lastname">Last Name:</label>
-                <input name="lastname" id="lastname" placeholder="Last Name" />
-            </div>
-            <div>
-                <label for="phone">Phone:</label>
-                <input name="phone" id="phone" type="tel" />
-            </div>
-            <div>
-                <label for="email">Email:</label>
-                <input name="email" id="email" type="email" />
-            </div>
-        </fieldset>
+        {% if attributes %}
         <fieldset>
+            {% for a in attributes %}
+            <div><label for="{{ a.code }}">{{ a.description }}</label>
+                 {% if a.datatype=="string" %}
+                 <input name="{{ a.code }}" id="{{ a.code }}" {{ a.required ? 'required="true"' : '' }} />
+                 {% elseif a.datatype=="text" %}
+                 <textarea name="{{ a.code }}" id="{{ a.code }}" {{ a.required ? 'required="true"' : '' }}></textarea>
+                 {% elseif a.datatype=="number" %}
+                 <input name="{{ a.code }}" id="{{ a.code }}" type="number" {{ a.required ? 'required="true"' : '' }} />
+                 {% elseif a.datatype=="datetime" %}
+                 <input name="{{ a.code }}" id="{{ a.code }}" type="datetime" {{ a.required ? 'required="true"' : '' }} />
+                 {% else %}
+                 <select name="{{ a.code }}" id="{{ a.code }}"
+                         {{ a.datatype=="multivaluelist" ? 'multiple="true"' : '' }}
+                         {{ a.required ? 'required="true"' : '' }}>
+                    {{ a.datatype=='singlevaluelist' ? '<option value=""></option>' : '' }}
+                    {% for f in a.values %}
+                    <option value="{{ f.key }}">{{ f.name }}</option>
+                    {% endfor %}
+                 </select>
+                 {% endif %}
+            </div>
+            {% endfor %}
+        </fieldset>
+        {% endif %}
+
+        <fieldset>
+            <input type="hidden" name="firstname"    value="{{ firstname }}" />
+            <input type="hidden" name="lastname"     value="{{ lastname  }}" />
+            <input type="hidden" name="phone"        value="{{ phone     }}" />
+            <input type="hidden" name="email"        value="{{ email     }}" />
+            <input type="hidden" name="service_code" value="{{ service.service_code }}" />
             <button type="submit">Submit</button>
         </fieldset>
     </form>
@@ -73,5 +89,4 @@
 <script async src="https://maps.googleapis.com/maps/api/js?libraries=maps,places&key={{ google_maps_api_key }}&v=weekly&callback=initMap"></script>
 <script src="{{ BASE_URI }}/js/map.js"></script>
 <script src="{{ BASE_URI }}/js/form.js"></script>
-
 {% endblock %}

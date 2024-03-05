@@ -15,8 +15,12 @@ class ServiceRequestController extends Controller
     {
         $open311 = $this->di->get('Web\Open311Gateway');
         $service = $open311->getService($params['service_code']);
+        $def     = $open311->getServiceDefinition($params['service_code']);
         if ($service) {
-            return new \Web\Views\ServiceRequestView($service);
+            if (!empty($_POST['description'])) {
+
+            }
+            return new \Web\Views\ServiceRequestView($service, $def);
         }
         return new \Web\Views\NotFoundView();
     }

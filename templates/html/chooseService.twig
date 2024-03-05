@@ -12,7 +12,7 @@
     <h2>{{ group_name }}</h2>
     <ul>
     {% for s in services %}
-        <li><a href="{{ uri('home.service', {'service_code':s.service_code, 'group_code':group_code}) }}">
+        <li><a href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':group_code}) }}">
                 {{ s.service_name }}
             </a>
         </li>
