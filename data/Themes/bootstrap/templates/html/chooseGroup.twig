@@ -7,6 +7,17 @@
 
 {% block content %}
 <section id="chooseGroup">
+    <header>
+        <div class="alert alert-info">
+            <h3 class="alert-heading">Non-Emergency Use Only</h3>
+            <p>This system is not for reporting emergencies or imminent safety hazards.</p>
+            <p>If this is an emergency, please dial 911.</p>
+        </div>
+        <div class="alert alert-info">
+            <h3 class="alert-heading">Public Record</h3>
+            <p>Information you provide through uReport is stored and retained by the City as a public record.</p>
+        </div>
+    </header>
     <div class="list-group">
     {% for code, group in groups %}
         <a href="{{ uri('home.service', {'group_code':code}) }}"
@@ -15,7 +26,5 @@
         </a>
     {% endfor %}
     </div>
-
-    <p><strong>Note:</strong> If an Emergency, dial 911.</p>
 </section>
 {% endblock %}
