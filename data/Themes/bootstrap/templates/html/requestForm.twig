@@ -18,10 +18,12 @@
 <section id="requestForm">
     <header>
         <nav>Progress:
-            <a href="{{ uri('home.index') }}">1</a>
-            <a href="{{ uri('home.service', {'group_code':group_code}) }}">2</a>
-            <a href="{{ uri('home.contact', {'group_code':group_code, 'service_code':service.service_code}) }}">3</a>
-            <a inert="true" class="current">4</a>
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="{{ uri('home.index') }}">1</a>
+                <li class="page-item"><a class="page-link" href="{{ uri('home.service', {'group_code':group_code}) }}">2</a>
+                <li class="page-item"><a class="page-link" href="{{ uri('home.contact', {'group_code':group_code, 'service_code':service.service_code}) }}">3</a>
+                <li class="page-item active"><a class="page-link" inert="true" class="current">4</a>
+            </ul>
         </nav>
         <h2>{{ service.group        }}</h2>
         <h3>{{ service.service_name }}</h3>
@@ -42,30 +44,31 @@
         </fieldset>
         <fieldset>
             <legend>General information:</legend>
-            <div>
+            <div class="form-group">
                 <label  for="media">Include Image:</label>
-                <input name="media" id="media" type="file" accept="image/*" />
+                <input name="media" id="media" type="file" accept="image/*" class="form-control-file" />
             </div>
-            <div>
+            <div class="form-group">
                 <label for="description">Describe this issue:</label>
-                <textarea name="description" id="description"></textarea>
+                <textarea name="description" id="description" class="form-control"></textarea>
             </div>
         </fieldset>
 
         {% if attributes %}
         <fieldset>
             {% for a in attributes %}
-            <div><label for="{{ a.code }}">{{ a.description }}</label>
+            <div class="form-group">
+                <label for="{{ a.code }}">{{ a.description }}</label>
                  {% if a.datatype=="string" %}
-                 <input name="{{ a.code }}" id="{{ a.code }}" {{ a.required ? 'required="true"' : '' }} />
+                 <input name="{{ a.code }}" id="{{ a.code }}" {{ a.required ? 'required="true"' : '' }}  class="form-control" />
                  {% elseif a.datatype=="text" %}
-                 <textarea name="{{ a.code }}" id="{{ a.code }}" {{ a.required ? 'required="true"' : '' }}></textarea>
+                 <textarea name="{{ a.code }}" id="{{ a.code }}" {{ a.required ? 'required="true"' : '' }} class="form-control"></textarea>
                  {% elseif a.datatype=="number" %}
-                 <input name="{{ a.code }}" id="{{ a.code }}" type="number" {{ a.required ? 'required="true"' : '' }} />
+                 <input name="{{ a.code }}" id="{{ a.code }}" type="number" {{ a.required ? 'required="true"' : '' }} class="form-control" />
                  {% elseif a.datatype=="datetime" %}
-                 <input name="{{ a.code }}" id="{{ a.code }}" type="datetime" {{ a.required ? 'required="true"' : '' }} />
+                 <input name="{{ a.code }}" id="{{ a.code }}" type="datetime" {{ a.required ? 'required="true"' : '' }} class="form-control" />
                  {% else %}
-                 <select name="{{ a.code }}" id="{{ a.code }}"
+                 <select name="{{ a.code }}" id="{{ a.code }}" class="form-control"
                          {{ a.datatype=="multivaluelist" ? 'multiple="true"' : '' }}
                          {{ a.required ? 'required="true"' : '' }}>
                     {{ a.datatype=='singlevaluelist' ? '<option value=""></option>' : '' }}
@@ -85,7 +88,7 @@
             <input type="hidden" name="phone"        value="{{ phone      }}" />
             <input type="hidden" name="email"        value="{{ email      }}" />
             <input type="hidden" name="service_code" value="{{ service.service_code }}" />
-            <button type="submit">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </fieldset>
     </form>
 

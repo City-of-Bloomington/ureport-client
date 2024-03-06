@@ -7,11 +7,14 @@
 
 {% block content %}
 <section id="chooseGroup">
-    <ul>
+    <div class="list-group">
     {% for code, group in groups %}
-        <li><a href="{{ uri('home.service', {'group_code':code}) }}">{{ group }}</a></li>
+        <a href="{{ uri('home.service', {'group_code':code}) }}"
+           class="list-group-item list-group-item-action">
+           {{ group }}
+        </a>
     {% endfor %}
-    </ul>
+    </div>
 
     <p><strong>Note:</strong> If an Emergency, dial 911.</p>
 </section>
