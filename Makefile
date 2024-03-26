@@ -12,7 +12,7 @@ K := $(foreach r, ${REQS}, $(if $(shell command -v ${r} 2> /dev/null), '', $(err
 
 LANGUAGES := $(wildcard language/*/LC_MESSAGES)
 JAVASCRIPT := $(shell find public -name '*.js' ! -name '*-*.js')
-SASS := $(shell find -name screen.scss -not -path '*/build/*')
+SASS := $(shell find . -name screen.scss -not -path '*/build/*')
 CSS := $(patsubst %.scss, %-$(VERSION).css, $(SASS))
 
 
