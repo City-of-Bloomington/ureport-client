@@ -22,9 +22,7 @@
 <section class="container px-4 text-center">
     <div class="row row-cols-2 gx-5">
     {% for code, group in groups %}
-        <div class="col">
-            <a href="{{ uri('home.service', {'group_code':code}) }}" class="list-group-item list-group-item-action p-3">{{ group }}</a>
-        </div>
+            <a href="{{ uri('home.service', {'group_code':code}) }}" class="col p-3 btn btn-outline-primary">{{ group }}</a>
     {% endfor %}
     </div>
 </section>
