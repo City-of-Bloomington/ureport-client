@@ -20,9 +20,14 @@
     </header>
 </section>
 <section class="container px-4 text-center">
-    <div class="row row-cols-2 gx-5">
+    <div class="row row-cols-1 row-cols-md-2 g-3">
     {% for code, group in groups %}
-            <a href="{{ uri('home.service', {'group_code':code}) }}" class="col p-3 btn btn-outline-primary">{{ group }}</a>
+        <div class="col">
+            <a href="{{ uri('home.service', {'group_code':code}) }}"class="p-3 btn btn-primary vstack align-items-center">
+                <img src="{{ 'https://bloomington.in.gov/static/ureport-client' ~ uri('home.service', {'group_code':code}) ~ '.svg' }}" role="img"/>
+            {{ group }}
+            </a>
+        </div>
     {% endfor %}
     </div>
 </section>
