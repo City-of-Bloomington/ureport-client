@@ -8,9 +8,11 @@
 {% extends "html/layouts/default.twig" %}
 
 {% block content %}
-<section id="chooseService">
-    <header>
-        <nav>Progress:
+<section id="chooseService" class="container w-50 my-3">
+    <header class="d-flex flex-wrap align-items-baseline">
+        <h2 class="me-auto">{{ group_name }}</h2>
+        <nav class="d-flex align-items-baseline" aria-label="Report Steps">
+            <span class="me-2">Progress:</span>
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="{{ uri('home.index') }}">1</a></li>
                 <li class="page-item active"  ><a class="page-link">2</a></li>
@@ -18,7 +20,6 @@
                 <li class="page-item disabled"><a class="page-link">4</a></li>
             </ul>
         </nav>
-        <h2>{{ group_name }}</h2>
     </header>
     <div class="list-group">
     {% for s in services %}
@@ -28,5 +29,9 @@
         </a>
     {% endfor %}
     </div>
+    <details class="mt-2">
+        <summary class="text-center fst-italic">Can't find what you're looking for?</summary>
+        <p>You may send an e-mail directly to info@bloomington.in.gov, or call the City at 812.349.3400.</p>
+    </details>
 </section>
 {% endblock %}

@@ -4,14 +4,12 @@
 <body class="min-vh-100 vstack">
     {{ include('html/layouts/partials/nav.twig') }}
 	<main class="container p-2 flex-grow-1">
-        <div>
             {% if errorMessages is defined %}
             {{ include('html/layouts/partials/errorMessages.twig') }}
             {% endif %}
 
             {% block content %}
             {% endblock %}
-        </div>
 	</main>
     {{ include('html/layouts/partials/footer.twig') }}
 </body>
