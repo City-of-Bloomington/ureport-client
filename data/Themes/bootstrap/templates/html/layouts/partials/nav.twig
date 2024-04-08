@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm shadow-sm">
+<nav class="navbar navbar-expand-lg shadow-sm">
     <div class="container">
         <div class="navbar-brand d-md-none">
             <a class="navbar-brand"  href="https://bloomington.in.gov/" aria-label="Official Homepage of the City of Bloomington, Indiana">
@@ -16,13 +16,18 @@
                 {{ APPLICATION_NAME }}
             </a>
         </div>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ BASE_URI }}/help">Help</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ BASE_URI }}/miscellaneous/53">Feedback</a>
-            </li>
-        </ul>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav-menu" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav-menu">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ BASE_URI }}/help">Help</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ BASE_URI }}/miscellaneous/53">Feedback</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
