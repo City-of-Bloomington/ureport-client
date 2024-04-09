@@ -97,7 +97,7 @@
     const DEFAULT_LATITUDE  = {{ default_latitude }},
           DEFAULT_LONGITUDE = {{ default_longitude }};
 </script>
-<script async src="https://maps.googleapis.com/maps/api/js?libraries=maps,places&key={{ google_maps_api_key }}&v=weekly&callback=initMap"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?libraries=maps,places&key={{ google_maps_api_key }}&loading=async&v=weekly&callback=initMap"></script>
 <script src="{{ BASE_URI }}/js/map-{{ VERSION }}.js"></script>
 <script src="{{ BASE_URI }}/js/form-{{ VERSION }}.js"></script>
 {% endblock %}
