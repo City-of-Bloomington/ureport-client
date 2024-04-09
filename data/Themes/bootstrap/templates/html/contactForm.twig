@@ -6,11 +6,10 @@
  #}
 {% extends "html/layouts/default.twig" %}
 {% block content %}
-<section class="container w-75 my-3">
-    <header class="d-flex flex-wrap align-items-baseline">
-        <h2 class="me-auto">{{ service.group }}</h2>
-        <nav class="d-flex align-items-baseline" aria-label="Report Steps">
-            <span class="me-2">Progress:</span>
+<section class="container my-3">
+    <header class="d-flex flex-wrap">
+        <h2 class="me-auto align-self-center">{{ service.group }}</h2>
+        <nav class="d-flex" aria-label="Report Steps">
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="{{ uri('home.index') }}">1</a>
                 <li class="page-item"><a class="page-link" href="{{ uri('home.service', {'group_code':group_code}) }}">2</a>
