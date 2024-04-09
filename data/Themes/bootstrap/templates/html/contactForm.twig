@@ -7,8 +7,8 @@
 {% extends "html/layouts/default.twig" %}
 {% block content %}
 <section class="container my-3">
-    <header class="d-flex flex-wrap">
-        <h2 class="me-auto align-self-center">{{ service.group }}</h2>
+    <header class="d-flex flex-wrap-reverse">
+        <h1 class="me-auto align-self-center">{{ service.group }}</h1>
         <nav class="d-flex" aria-label="Report Steps">
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="{{ uri('home.index') }}">1</a>
@@ -18,28 +18,28 @@
             </ul>
         </nav>
     </header>
-    <h3>{{ service.service_name }}</h3>
+    <h2>{{ service.service_name }}</h2>
     <p>{{ service.description  }}</p>
     <form method="post">
         <fieldset>
-            <legend>Contact Information</legend>
+            <legend>Your Information</legend>
             <p>By leaving the fields below empty, <strong>you may submit anonymously</strong>.</p>
-            <p><strong>Note:</strong> <i>Information you provide through uReport is stored and retained by the City as a public record.</i></p>
+            <p>Note: <i>Information you provide through uReport is stored and retained by the City as a public record.</i></p>
 
-            <div class="form-group">
-                <label  for="first_name">First Name:</label>
-                <input name="first_name" id="first_name" placeholder="First Name" class="form-control" />
+            <div class="mb-3">
+                <label  for="first_name" class="form-label">First Name:</label>
+                <input name="first_name" id="first_name" class="form-control" />
             </div>
-            <div class="form-group">
-                <label for="last_name">Last Name:</label>
-                <input name="last_name" id="last_name" placeholder="Last Name" class="form-control" />
+            <div class="mb-3">
+                <label for="last_name" class="form-label">Last Name:</label>
+                <input name="last_name" id="last_name" class="form-control" />
             </div>
-            <div class="form-group">
-                <label for="phone">Phone:</label>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone:</label>
                 <input name="phone" id="phone" type="tel" class="form-control" />
             </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
                 <input name="email" id="email" type="email" class="form-control" />
             </div>
             <button type="submit" class="btn btn-primary">Next</button>
