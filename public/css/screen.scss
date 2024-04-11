@@ -1,17 +1,3 @@
-#map_container {
-    position: relative;
-    width: 100%; height: 320px;
-}
-
-#map { width: 100%; height: 100%; }
-#crosshairs {
-    position: relative;
-    width: 17px; height: 17px;
-    top: -50%; left: 50%;
-    pointer-events: none;
-    background-image: url('crosshairs.gif');
-}
-
 #media:invalid { background-color: #600; }
 
 a[class="current"] { font-weight: bold; }

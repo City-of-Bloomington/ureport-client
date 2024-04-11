@@ -15,9 +15,10 @@
 {% extends "html/layouts/default.twig" %}
 
 {% block content %}
-<section id="requestForm">
-    <header>
-        <nav>Progress:
+<section class="container my-3" id="requestForm">
+    <header class="d-flex flex-wrap-reverse">
+         <h1 class="me-auto align-self-center">{{ service.group }}</h1>
+        <nav class="d-flex" aria-label="Report Steps">
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="{{ uri('home.index') }}">1</a>
                 <li class="page-item"><a class="page-link" href="{{ uri('home.service', {'group_code':group_code}) }}">2</a>
@@ -25,31 +26,34 @@
                 <li class="page-item active"><a class="page-link" inert="true" class="current">4</a>
             </ul>
         </nav>
-        <h2>{{ service.group        }}</h2>
-        <h3>{{ service.service_name }}</h3>
-         <p>{{ service.description  }}</p>
     </header>
-
+    <h2>{{ service.service_name }}</h2>
     <form method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Service request location:</legend>
-            <div id="map_container">
-                <div id="map"></div>
-                <div id="crosshairs"></div>
+            <div id="map_container" class="mb-2 position-relative w-100" style="height:320px;">
+                <div id="map" class="w-100 h-100"></div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" class="bi bi-crosshair position-absolute top-50 start-50 translate-middle" viewBox="0 0 16 16">
+                    <path d="M8.5.5a.5.5 0 0 0-1 0v.518A7 7 0 0 0 1.018 7.5H.5a.5.5 0 0 0 0 1h.518A7 7 0 0 0 7.5 14.982v.518a.5.5 0 0 0 1 0v-.518A7 7 0 0 0 14.982 8.5h.518a.5.5 0 0 0 0-1h-.518A7 7 0 0 0 8.5 1.018zm-6.48 7A6 6 0 0 1 7.5 2.02v.48a.5.5 0 0 0 1 0v-.48a6 6 0 0 1 5.48 5.48h-.48a.5.5 0 0 0 0 1h.48a6 6 0 0 1-5.48 5.48v-.48a.5.5 0 0 0-1 0v.48A6 6 0 0 1 2.02 8.5h.48a.5.5 0 0 0 0-1zM8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                </svg>
             </div>
-            <label for="address_string">Address</label>
-            <input name="address_string" id="address_string" value="" />
-            <input name="lat"            id="lat"            type="hidden" value="" />
-            <input name="long"           id="long"           type="hidden" value="" />
+            <div class="mb-3 row">
+                <label for="address_string" class="col-sm-1 col-form-label">Address:</label>
+                <div class="col-sm-11">
+                    <input name="address_string" id="address_string" class="form-control" value="" />
+                    <input name="lat"            id="lat"            type="hidden" value="" />
+                    <input name="long"           id="long"           type="hidden" value="" />
+                </div>
+            </div>
         </fieldset>
         <fieldset>
             <legend>General information:</legend>
-            <div class="form-group">
-                <label  for="media">Include Image:</label>
-                <input name="media" id="media" type="file" accept="image/*" class="form-control-file" />
+            <div class="mb-3">
+                <label  for="media" class="form-label">Include Image:</label>
+                <input name="media" id="media" type="file" accept="image/*" class="form-control" />
             </div>
-            <div class="form-group">
-                <label for="description">Describe this issue:</label>
+            <div class="mb-3">
+                <label for="description" class="form-label">Describe this issue:</label>
                 <textarea name="description" id="description" class="form-control"></textarea>
             </div>
         </fieldset>
@@ -57,7 +61,7 @@
         {% if attributes %}
         <fieldset>
             {% for a in attributes %}
-            <div class="form-group">
+            <div >
                 <label for="{{ a.code }}">{{ a.description }}</label>
                  {% if a.datatype=="string" %}
                  <input name="{{ a.code }}" id="{{ a.code }}" {{ a.required ? 'required="true"' : '' }}  class="form-control" />
