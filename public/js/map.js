@@ -75,9 +75,6 @@ function setCurrentPosition(position)
     };
     
     map.setCenter(currentCoordinates);
-    
-    document.getElementById('lat' ).value = position.coords.latitude;
-    document.getElementById('long').value = position.coords.longitude;
 
     geocoder.geocode({ location: currentCoordinates }, function (results, status) {
         if (status === 'OK') {
