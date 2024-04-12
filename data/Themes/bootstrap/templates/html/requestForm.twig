@@ -66,9 +66,10 @@
 
         {% if attributes %}
         <fieldset>
+            <legend>{{ service.service_name }} information:</legend>
             {% for a in attributes %}
-            <div >
-                <label for="{{ a.code }}">{{ a.description }}</label>
+            <div class="mb-3">
+                <label for="{{ a.code }}" class="form-label">{{ a.description }}:</label>
                  {% if a.datatype=="string" %}
                  <input name="{{ a.code }}" id="{{ a.code }}" {{ a.required ? 'required="true"' : '' }}  class="form-control" />
                  {% elseif a.datatype=="text" %}
@@ -81,7 +82,7 @@
                  <select name="{{ a.code }}" id="{{ a.code }}" class="form-control"
                          {{ a.datatype=="multivaluelist" ? 'multiple="true"' : '' }}
                          {{ a.required ? 'required="true"' : '' }}>
-                    {{ a.datatype=='singlevaluelist' ? '<option value=""></option>' : '' }}
+                    {{ a.datatype=='singlevaluelist' ? '<option value="">--Please choose an option--</option>' : '' }}
                     {% for f in a.values %}
                     <option value="{{ f.key }}">{{ f.name }}</option>
                     {% endfor %}
