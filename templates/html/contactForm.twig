@@ -6,42 +6,43 @@
  #}
 {% extends "html/layouts/default.twig" %}
 {% block content %}
-<section>
-    <header>
-        <nav>Progress:
-            <a href="{{ uri('home.index') }}">1</a>
-            <a href="{{ uri('home.service', {'group_code':group_code}) }}">2</a>
-            <a inert="true" class="current">3</a>
-            <a inert="true">4</a>
+<section class="container my-3">
+    <header class="d-flex flex-wrap-reverse">
+        <h1 class="me-auto align-self-center">{{ service.group }}</h1>
+        <nav class="d-flex" aria-label="Report Steps">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="{{ uri('home.index') }}">1</a>
+                <li class="page-item"><a class="page-link" href="{{ uri('home.service', {'group_code':group_code}) }}">2</a>
+                <li class="page-item active"  ><a class="page-link">3</a>
+                <li class="page-item disabled"><a class="page-link">4</a>
+            </ul>
         </nav>
-        <h2>{{ service.group        }}</h2>
-        <h3>{{ service.service_name }}</h3>
-         <p>{{ service.description  }}</p>
     </header>
-
+    <h2>{{ service.service_name }}</h2>
+    <p>{{ service.description  }}</p>
     <form method="post">
         <fieldset>
-            <legend>Contact Information</legend>
+            <legend>Your Information</legend>
             <p>By leaving the fields below empty, <strong>you may submit anonymously</strong>.</p>
-            <p><strong>Note:</strong> <i>Information you provide through uReport is stored and retained by the City as a public record.</i></p>
+            <p>Note: <i>Information you provide through uReport is stored and retained by the City as a public record.</i></p>
 
-            <div>
-                <label  for="first_name">First Name:</label>
-                <input name="first_name" id="first_name" placeholder="First Name" />
+            <div class="mb-3">
+                <label  for="first_name" class="form-label">First Name:</label>
+                <input name="first_name" id="first_name" class="form-control" />
             </div>
-            <div>
-                <label for="last_name">Last Name:</label>
-                <input name="last_name" id="last_name" placeholder="Last Name" />
+            <div class="mb-3">
+                <label for="last_name" class="form-label">Last Name:</label>
+                <input name="last_name" id="last_name" class="form-control" />
             </div>
-            <div>
-                <label for="phone">Phone:</label>
-                <input name="phone" id="phone" type="tel" />
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone:</label>
+                <input name="phone" id="phone" type="tel" class="form-control" />
             </div>
-            <div>
-                <label for="email">Email:</label>
-                <input name="email" id="email" type="email" />
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input name="email" id="email" type="email" class="form-control" />
             </div>
-            <button type="submit">Next</button>
+            <button type="submit" class="btn btn-primary">Next</button>
         </fieldset>
     </form>
 </section>

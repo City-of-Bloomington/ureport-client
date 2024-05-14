@@ -5,7 +5,7 @@
  */
 declare (strict_types=1);
 
-define('APPLICATION_NAME', 'blossom');
+define('APPLICATION_NAME', 'ureport');
 
 /**
  * URL Generation settings
@@ -15,7 +15,7 @@ define('APPLICATION_NAME', 'blossom');
  * If your site is being proxied, change BASE_HOST to the hostname
  * used for the outside world.
  */
-define('BASE_URI' , '/blossom');
+define('BASE_URI' , '/ureport');
 #define('BASE_HOST', isset($_SERVER['HTTP_X_FORWARDED_HOST'])
 #                        ? $_SERVER['HTTP_X_FORWARDED_HOST']
 #                        : $_SERVER['SERVER_NAME']);
@@ -39,7 +39,7 @@ define('GOOGLE_MAPS_API_KEY', '');
  * A theme can consist of templates, blocks which will override core.
  * The current theme's screen.css will be included in the HTML head.
  */
-define('THEME', 'COB');
+// define('THEME', 'COB');
 
 define('DATE_FORMAT',    'n/j/Y');
 define('TIME_FORMAT',    'g:i a');

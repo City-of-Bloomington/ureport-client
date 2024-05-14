@@ -6,25 +6,27 @@
 {% extends "html/layouts/default.twig" %}
 
 {% block content %}
-<section id="chooseGroup">
+<section id="chooseGroup" class="container">
     <header>
-        <h2>Notice</h2>
-        <dl><dt>Non-Emergency Use Only</dt>
-            <dd><p>This system is not for reporting emergencies or imminent safety hazards.</p>
-                <p>If this is an emergency, please dial 911.</p>
-            </dd>
-
-            <dt>Public Record</dt>
-            <dd><p>Information you provide through uReport is stored and retained
-                   by the City as a public record.
-                </p>
-            </dd>
-        </dl>
+        <div class="alert alert-info">
+            <h1 class="alert-heading fs-3">Non-Emergency Use Only</h1>
+            <p>This system is not for reporting emergencies or imminent safety hazards.</p>
+            <p>If this is an emergency, please dial 911.</p>
+            <h1 class="alert-heading fs-3">Public Record</h1>
+            <p>Information you provide through uReport is stored and retained by the City as a public record.</p>
+        </div>
     </header>
-    <ul>
+</section>
+<section class="container text-center">
+    <div class="row row-cols-1 row-cols-md-2 g-3 justify-content-center">
     {% for code, group in groups %}
-        <li><a href="{{ uri('home.service', {'group_code':code}) }}">{{ group }}</a></li>
+        <div class="col">
+            <a href="{{ uri('home.service', {'group_code':code}) }}"class="p-3 btn btn-primary vstack align-items-center">
+                <img src="{{ 'https://bloomington.in.gov/static/ureport-client' ~ uri('home.service', {'group_code':code}) ~ '.svg' }}" role="img" aria-hidden="true" class="mb-2" style="width:20%;">
+            {{ group }}
+            </a>
+        </div>
     {% endfor %}
-    </ul>
+    </div>
 </section>
 {% endblock %}

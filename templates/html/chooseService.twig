@@ -1,5 +1,5 @@
 {#
- * @copyright 2023 City of Bloomington, Indiana
+ * @copyright 2024 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  * @param array  services    Open311 service information
  * @param string group_name
@@ -8,23 +8,29 @@
 {% extends "html/layouts/default.twig" %}
 
 {% block content %}
-<section id="chooseService">
-    <header>
-        <nav>Progress:
-            <a href="{{ uri('home.index') }}">1</a>
-            <a inert="true" class="current">2</a>
-            <a inert="true">3</a>
-            <a inert="true">4</a>
+<section id="chooseService" class="container my-3">
+    <header class="d-flex flex-wrap-reverse">
+        <h1 class="me-auto align-self-center">{{ group_name }}</h1>
+        <nav class="d-flex" aria-label="Report Steps">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="{{ uri('home.index') }}">1</a></li>
+                <li class="page-item active"  ><a class="page-link">2</a></li>
+                <li class="page-item disabled"><a class="page-link">3</a></li>
+                <li class="page-item disabled"><a class="page-link">4</a></li>
+            </ul>
         </nav>
-        <h2>{{ group_name }}</h2>
     </header>
-    <ul>
+    <div class="list-group">
     {% for s in services %}
-        <li><a href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':group_code}) }}">
-                {{ s.service_name }}
-            </a>
-        </li>
+        <a href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':group_code}) }}"
+           class="list-group-item list-group-item-action">
+           {{ s.service_name }}
+        </a>
     {% endfor %}
-    </ul>
+    </div>
+    <details class="my-3">
+        <summary class="fst-italic text-decoration-underline" style="list-style:none;">Can't find what you're looking for?</summary>
+        <span class="text-center">You may send an e-mail directly to <a href="mailto:info@bloomington.in.gov">info@bloomington.in.gov</a>, or call the City at <a href="tel:812-349-3400">812.349.3400</a>.</span>
+    </details>
 </section>
 {% endblock %}
