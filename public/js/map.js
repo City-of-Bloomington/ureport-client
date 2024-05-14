@@ -3,6 +3,13 @@ let map,
     geocoder,
     autocomplete;
 
+const bounds = {
+    north: 39.220849,
+    south: 39.121037,
+    east: -86.465456,
+    west: -86.593859
+};
+
 function initMap()
 {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -22,12 +29,9 @@ function initMap()
         fields:                ['formatted_address', 'geometry'],
         componentRestrictions: {country: 'us'},
         types:                 ['address'],
-        locationRestriction: {
-            north: 39.220849,
-            south: 39.121037,
-            east: -86.465456,
-            west: -86.593859
-        }
+        locationBias:          bounds,
+        locationRestriction:   bounds,
+        strictBounds:          true
     });
     autocomplete.addListener('place_changed', function() {
         const p = autocomplete.getPlace();
@@ -59,11 +63,11 @@ function chooseLocation()
     });
 }
 
-function getCurrentLocation() 
+function getCurrentLocation()
 {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(setCurrentPosition);
-    } else { 
+    } else {
       x.innerHTML = "Geolocation is not supported by this browser.";
     }
   }
@@ -73,7 +77,7 @@ function setCurrentPosition(position)
         lat: position.coords.latitude,
         lng: position.coords.longitude
     };
-    
+
     map.setCenter(currentCoordinates);
 
     geocoder.geocode({ location: currentCoordinates }, function (results, status) {
