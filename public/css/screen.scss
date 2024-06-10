@@ -2,3 +2,5 @@
 
 a[class="current"] { font-weight: bold; }
 a[inert] { color: gray; }
+
+summary::-webkit-details-marker { display: none; }
