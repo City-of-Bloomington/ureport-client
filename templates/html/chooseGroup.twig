@@ -22,7 +22,7 @@
     {% for code, group in groups %}
         <details class="col">
             <summary class="p-3 btn btn-primary vstack align-items-center">
-                <img src="{{ 'https://bloomington.in.gov/static/ureport-client' ~ uri('home.service', {'group_code':code}) ~ '.svg' }}" role="img" aria-hidden="true" class="mb-2" style="width:20%;">
+                <img src="{{ 'https://bloomington.in.gov/static/ureport-client/' ~ code ~ '.svg' }}" role="img" aria-hidden="true" class="mb-2" style="width:20%;">
                 {{ group.name }}
             </summary>
             <div class="list-group">
