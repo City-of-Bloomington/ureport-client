@@ -4,9 +4,18 @@
  * @param array searchResults
  #}
 {% for s in searchResults %}
+{% if s.service_request_id is defined %}
+<a href="https://bloomington.in.gov/crm/tickets/view?ticket_id={{ s.service_request_id }}"
+    class="list-group-item list-group-item-action">
+    <h3>{{ s.service_name }}</h3>
+    <p>{{ s.status }} {{ s.requested_datetime | date('m/d/Y') }} {{ s.agency_responsible }}</p>
+    <p>{{ s.description }}</p>
+</a>
+{% else %}
 <a href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':s.group_code}) }}"
     class="list-group-item list-group-item-action">
     <h3>{{ s.service_name }}</h3>
     <p>{{ s.description }}</p>
 </a>
+{% endif %}
 {% endfor %}
