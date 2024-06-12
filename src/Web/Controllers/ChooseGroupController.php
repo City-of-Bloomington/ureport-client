@@ -11,6 +11,8 @@ use Web\View;
 
 class ChooseGroupController extends Controller
 {
+    public const MIN_QUERY_LENGTH = 3;
+
     public function __invoke(array $params): View
     {
         $open311 = $this->di->get('Web\Open311Gateway');
@@ -21,6 +23,30 @@ class ChooseGroupController extends Controller
                 'services' => $open311->getGroupServices($name)
             ];
         }
-        return new \Web\Views\ChooseGroupView($groups);
+
+        $results = [];
+        if (!empty($_GET['query']) && strlen($_GET['query']) >= self::MIN_QUERY_LENGTH) {
+            $q = strtolower($_GET['query']);
+
+            foreach ($groups as $g => $group) {
+                foreach ($group['services'] as $s) {
+                    $service_name = strtolower($s['service_name']);
+                    $description  = strtolower($s['description' ] ?? '');
+
+                    if (str_contains($service_name, $q) || str_contains($description, $q)) {
+                        $results[] = [
+                            'group_code'   => $g,
+                            'service_code' => $s['service_code'],
+                            'service_name' => $s['service_name'],
+                            'description'  => $s['description' ]
+                        ];
+                    }
+
+                }
+            }
+        }
+        return isset($_GET['partial'])
+               ? new \Web\Views\SearchResultsView($results)
+               : new \Web\Views\ChooseGroupView($groups, $results);
     }
 }

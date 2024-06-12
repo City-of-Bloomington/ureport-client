@@ -1,0 +1,12 @@
+{#
+ * @copyright 2024 City of Bloomington, Indiana
+ * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
+ * @param array searchResults
+ #}
+{% for s in searchResults %}
+<a href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':s.group_code}) }}"
+    class="list-group-item list-group-item-action">
+    <h3>{{ s.service_name }}</h3>
+    <p>{{ s.description }}</p>
+</a>
+{% endfor %}
