@@ -30,6 +30,10 @@ class ServiceRequestController extends Controller
                         $_SESSION['errorMessages'][] = $e;
                     }
                 }
+
+                if ($res['code'] == 400 && !empty($res['description'])) {
+                    $_SESSION['errorMessages'][] = new \Exception($res['description']);
+                }
             }
             return new \Web\Views\ServiceRequestView($service, $def, $params['group_code']);
         }
