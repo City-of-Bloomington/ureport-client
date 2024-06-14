@@ -27,17 +27,20 @@
                 </div>
         </fieldset>
     </form>
-    <div class="row row-cols-1 row-cols-md-2 g-3 justify-content-center">
+    <div class="">
     {% for code, group in groups %}
-        <details class="col">
-            <summary class="p-3 btn btn-primary vstack align-items-center">
-                <img src="{{ 'https://bloomington.in.gov/static/ureport-client/' ~ code ~ '.svg' }}" role="img" aria-hidden="true" class="mb-2" style="width:20%;">
-                <h2>{{ group.name }}</h2>
+        <details class="d-flex mb-3">
+            <summary class="btn btn-primary p-sm-3 d-flex flex-wrap flex-sm-wrap justify-content-center justify-content-md-start align-items-center">
+                <img src="{{ 'https://bloomington.in.gov/static/ureport-client/' ~ code ~ '.svg' }}" role="img" aria-hidden="true" class="m-sm-3 m-1" style="width: 5em;">
+                <div class="d-flex flex-column align-items-center align-items-md-start">
+                    <h2>{{ group.name }}</h2>
+                    <p>Test list of example services in this category...</p>
+                </div>
             </summary>
             <div class="list-group mt-1">
             {% for s in group.services %}
                 <a href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':code}) }}"
-                   class="list-group-item list-group-item-action">
+                class="list-group-item list-group-item-action">
                     <h3>{{ s.service_name }}</h3>
                     <p>{{ s.description }}</p>
                 </a>
