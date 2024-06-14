@@ -9,46 +9,45 @@
 {% block content %}
 <section class="container">
     <header>
-        <h1>Select a Report Category</h1>
+        <h1>Report a Issue</h1>
         <div class="alert alert-secondary" role="alert">
-            <p><strong>Non-Emergency Use Only:</strong> This system is not for reporting emergencies or imminent safety hazards. If this is an emergency, please dial 911.</p>
+            <p><strong>Non-Emergency Use Only:</strong> This system is not for reporting emergencies or imminent safety hazards. If this is an emergency, please dial 9-1-1.</p>
             <p class="mb-1"><strong>Public Record:</strong> Information you provide through uReport is stored and retained by the City as a public record.</p>
         </div>
     </header>
     <form>
         <fieldset>
             <legend>Search</legend>
-                <div class="mb-1">
-                    <label class="form-label" for="query">Type to search for services or a ticket</label>
-                    <input class="form-control" name="query" id="query" placeholder="Example: Removal or #000000" />
-                </div>
-                <div id="searchResults" class="list-group mb-3">
-                        {% if searchResults %}{{ include('html/partials/searchResults.twig') }}{% endif %}
-                </div>
+            <div class="mb-1">
+                <label class="form-label" for="query">Type to search for services or a ticket</label>
+                <input class="form-control" name="query" id="query" placeholder="Example: Removal or #000000" />
+            </div>
+            <div id="searchResults" class="list-group mb-2">
+                    {% if searchResults %}{{ include('html/partials/searchResults.twig') }}{% endif %}
+            </div>
         </fieldset>
     </form>
-    <div class="">
+    <h2>Select a Service Type</h2>
     {% for code, group in groups %}
-        <details class="d-flex mb-3">
-            <summary class="btn btn-primary p-sm-3 d-flex flex-wrap flex-sm-wrap justify-content-center justify-content-md-start align-items-center">
-                <img src="{{ 'https://bloomington.in.gov/static/ureport-client/' ~ code ~ '.svg' }}" role="img" aria-hidden="true" class="m-sm-3 m-1" style="width: 5em;">
-                <div class="d-flex flex-column align-items-center align-items-md-start">
-                    <h2>{{ group.name }}</h2>
-                    <p>Test list of example services in this category...</p>
-                </div>
-            </summary>
-            <div class="list-group mt-1">
-            {% for s in group.services %}
-                <a href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':code}) }}"
-                class="list-group-item list-group-item-action">
-                    <h3>{{ s.service_name }}</h3>
-                    <p>{{ s.description }}</p>
-                </a>
-            {% endfor %}
+    <details class="d-flex mb-3">
+        <summary class="btn btn-primary p-sm-3 d-flex flex-wrap flex-sm-wrap justify-content-center justify-content-md-start align-items-center">
+            <img src="{{ 'https://bloomington.in.gov/static/ureport-client/' ~ code ~ '.svg' }}" role="img" aria-hidden="true" class="m-sm-3 m-1" style="width: 5em;">
+            <div class="d-flex flex-column align-items-center align-items-md-start">
+                <h3>{{ group.name }}</h3>
+                <p>Test list of example services in this category...</p>
             </div>
-        </details>
+        </summary>
+        <div class="list-group mt-1">
+        {% for s in group.services %}
+            <a href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':code}) }}"
+            class="list-group-item list-group-item-action">
+                <h4>{{ s.service_name }}</h4>
+                <p>{{ s.description }}</p>
+            </a>
+        {% endfor %}
+        </div>
+    </details>
     {% endfor %}
-    </div>
 </section>
 <script src="{{ BASE_URI }}/js/search-{{ VERSION }}.js"></script>
 {% endblock %}
