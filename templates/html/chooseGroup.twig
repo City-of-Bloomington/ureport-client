@@ -1,8 +1,9 @@
 {#
  * @copyright 2024 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
- * @param array groups
- * @param array searchResults
+ * @param array  groups
+ * @param array  searchResults
+ * @param string query            Optional
 #}
 {% extends "html/layouts/default.twig" %}
 
@@ -20,7 +21,7 @@
             <legend>Search</legend>
             <div class="mb-1">
                 <label class="form-label" for="query">Type to search for services or a ticket</label>
-                <input class="form-control" name="query" id="query" placeholder="Example: Removal or #000000" />
+                <input class="form-control" name="query" id="query" value="{{ query }}" placeholder="Example: Removal or #000000" />
             </div>
             <div id="searchResults" class="list-group mb-2">
                     {% if searchResults %}{{ include('html/partials/searchResults.twig') }}{% endif %}

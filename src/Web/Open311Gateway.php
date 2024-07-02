@@ -107,7 +107,7 @@ class Open311Gateway
                    : null;
 	}
 
-	public function getServiceRequest(string $service_request_id): array
+	public function getServiceRequest(int $service_request_id): array
 	{
 		return $this->queryServer("{$this->url}/requests/$service_request_id.json");
 	}

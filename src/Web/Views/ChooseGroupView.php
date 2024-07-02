@@ -10,12 +10,13 @@ use Web\View;
 
 class ChooseGroupView extends View
 {
-    public function __construct(array $groups, array $results)
+    public function __construct(array $groups, array $results, string $query=null)
     {
         parent::__construct();
         $this->vars = [
             'groups'        => $groups,
-            'searchResults' => $results
+            'searchResults' => $results,
+            'query'         => $query
         ];
     }
 

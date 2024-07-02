@@ -5,7 +5,7 @@
         "aura/router":                     "@stable",
         "apereo/phpcas":                   "@stable",
         "guzzlehttp/guzzle":               "@stable",
-        "graylog2/gelf-php":               "@stable",
+        "graylog2/gelf-php":               "^1",
         "laminas/laminas-log":             "@stable",
         "twig/twig":                       "@stable"
     },

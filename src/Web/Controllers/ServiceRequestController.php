@@ -23,7 +23,7 @@ class ServiceRequestController extends Controller
                 $res  = $json[0];
                 if (!empty($res['service_request_id'])) {
                     try {
-                        $req = $open311->getServiceRequest($res['service_request_id']);
+                        $req = $open311->getServiceRequest((int)$res['service_request_id']);
                         return new \Web\Views\ThankYouView((int)$res['service_request_id']);
                     }
                     catch (\Exception $e) {

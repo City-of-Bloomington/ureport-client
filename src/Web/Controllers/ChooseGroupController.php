@@ -8,6 +8,7 @@ namespace Web\Controllers;
 
 use Web\Controller;
 use Web\View;
+use Web\Open311Gateway;
 
 class ChooseGroupController extends Controller
 {
@@ -27,13 +28,13 @@ class ChooseGroupController extends Controller
         $results = [];
         if (!empty($_GET['query']) && strlen($_GET['query']) >= self::MIN_QUERY_LENGTH) {
             $results = is_numeric($_GET['query'])
-                     ? $this->search_tickets ((int)$_GET['query'])
+                     ? $this->search_tickets ((int)$_GET['query'], $open311)
                      : $this->search_services(     $_GET['query'], $groups);
         }
 
         return isset($_GET['partial'])
-               ? new \Web\Views\SearchResultsView($results)
-               : new \Web\Views\ChooseGroupView($groups, $results);
+               ? new \Web\Views\SearchResultsView($results, $_GET['query'])
+               : new \Web\Views\ChooseGroupView($groups, $results, $_GET['query'] ?? null);
     }
 
     private function search_services(string $query, array $groups): array
@@ -60,14 +61,14 @@ class ChooseGroupController extends Controller
         return $results;
     }
 
-    private function search_tickets(int $ticket_id): array
+    private function search_tickets(int $ticket_id, Open311Gateway $open311): array
     {
         global $UREPORT;
 
         $results = [];
-        $url     = "$UREPORT[url]/requests/$ticket_id.json";
-        $json    = json_decode(file_get_contents($url), true);
-        if ($json && $json[0]['service_request_id']) {
+        $json    = $open311->getServiceRequest($ticket_id);
+        error_log(print_r($json, true));
+        if ($json && !empty($json[0]['service_request_id'])) {
             $results[] = [
                 'service_request_id' => $json[0]['service_request_id'],
                 'service_code'       => $json[0]['service_code'],

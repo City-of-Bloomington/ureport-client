@@ -12,11 +12,14 @@ use Web\View;
 
 class SearchResultsView extends View
 {
-    public function __construct(array $searchResults)
+    public function __construct(array $searchResults, string $query)
     {
         parent::__construct();
 
-        $this->vars = ['searchResults' => $searchResults];
+        $this->vars = [
+            'searchResults' => $searchResults,
+            'query'         => $query
+        ];
     }
 
     public function render(): string
