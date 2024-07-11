@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2006-2023 City of Bloomington, Indiana
+ * @copyright 2006-2024 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  */
 namespace Web;
@@ -24,7 +24,9 @@ abstract class View
 	 */
 	public function __construct()
 	{
-        $this->outputFormat = !empty($_REQUEST['format']) ? $_REQUEST['format'] : 'html';
+        $this->outputFormat = (!empty($_REQUEST['format']) && self::isValidFormat($_REQUEST['format']))
+                            ? $_REQUEST['format']
+                            : 'html';
 
         $tpl = [];
         if (defined('THEME')) {
@@ -62,6 +64,19 @@ abstract class View
         bindtextdomain('errors',   APPLICATION_HOME.'/language');
         textdomain('labels');
 	}
+
+	/**
+     * Twig templates are organized by output format.  So, a format is valid
+     * if there is a directory of twig templates matching the format name.
+     */
+	private static function isValidFormat(string $format): bool
+    {
+        $dir = glob(APPLICATION_HOME.'/templates/*', GLOB_ONLYDIR);
+        foreach ($dir as $d) {
+            if ($format == basename($d)) { return true; }
+        }
+        return false;
+    }
 
 	/**
 	 * Cleans strings for output
