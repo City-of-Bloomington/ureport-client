@@ -31,7 +31,7 @@ class ServiceRequestController extends Controller
                     }
                 }
 
-                if ($res['code'] == 400 && !empty($res['description'])) {
+                if (!empty($res['code']) && $res['code'] == 400 && !empty($res['description'])) {
                     $_SESSION['errorMessages'][] = new \Exception($res['description']);
                 }
             }
