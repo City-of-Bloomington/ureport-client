@@ -10,6 +10,7 @@ $map    = $ROUTES->getMap();
 
 $map->attach('home.', '', function ($r) {
     $r->get('help',   '/help',                                Web\Controllers\HelpController::class);
+    $r->get('success', '/success',                            Web\Controllers\SuccessController::class);
     $r->get('request', '/{group_code}/{service_code}/fields', Web\Controllers\ServiceRequestController::class)->allows(['POST']);
     $r->get('contact', '/{group_code}/{service_code}',        Web\Controllers\ContactInfoController::class)->allows(['POST']);
     $r->get('service', '/{group_code}',                       Web\Controllers\ChooseServiceController::class);

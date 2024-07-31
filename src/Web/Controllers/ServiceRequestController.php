@@ -24,7 +24,8 @@ class ServiceRequestController extends Controller
                 if (!empty($res['service_request_id'])) {
                     try {
                         $req = $open311->getServiceRequest((int)$res['service_request_id']);
-                        return new \Web\Views\ThankYouView((int)$res['service_request_id']);
+                        header('Location: '.View::generateUrl('home.success')."?service_request_id=$res[service_request_id]");
+                        exit();
                     }
                     catch (\Exception $e) {
                         $_SESSION['errorMessages'][] = $e;
