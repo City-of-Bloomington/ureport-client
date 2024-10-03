@@ -18,6 +18,7 @@ class ServiceRequestView extends View
             'attributes'          => $definition['attributes'] ?? null,
             'group_code'          => $group_code,
             'google_maps_api_key' => GOOGLE_MAPS_API_KEY,
+            'recaptcha_site_key'  => RECAPTCHA_SITE_KEY,
             'default_latitude'    => ini_get('date.default_latitude'),
             'default_longitude'   => ini_get('date.default_longitude'),
             'first_name'          => $_SESSION['first_name'] ?? '',

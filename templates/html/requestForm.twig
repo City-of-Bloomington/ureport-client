@@ -5,6 +5,7 @@
  * @param array  attributes          Open311 definition of custom fields
  * @param string group_code
  * @param string google_maps_api_key
+ * @param string recaptcha_site_key
  * @param float  default_latitude
  * @param float  default_longitude
  * @param string first_name
@@ -28,7 +29,7 @@
         </nav>
     </header>
     <h2>{{ service.service_name }}</h2>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" id="service_request_form">
         <fieldset>
             <legend>Service request location:</legend>
             <div id="map_container" class="mb-2 position-relative w-100" style="height:320px;">
@@ -98,13 +99,21 @@
         <input type="hidden" name="phone"        value="{{ phone      }}" />
         <input type="hidden" name="email"        value="{{ email      }}" />
         <input type="hidden" name="service_code" value="{{ service.service_code }}" />
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary g-recaptcha"
+            data-sitekey="{{ recaptcha_site_key }}"
+            data-callback='recaptcha'
+            data-action='submit'>
+            Submit
+        </button>
 
     </form>
 </section>
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <script>
     const DEFAULT_LATITUDE  = {{ default_latitude }},
           DEFAULT_LONGITUDE = {{ default_longitude }};
+
+    function recaptcha(token) { document.getElementById('service_request_form').submit(); }
 </script>
 <script async src="https://maps.googleapis.com/maps/api/js?libraries=maps,places&key={{ google_maps_api_key }}&loading=async&v=weekly&callback=initMap"></script>
 <script src="{{ BASE_URI }}/js/map-{{ VERSION }}.js"></script>

@@ -21,7 +21,9 @@ $UREPORT = [
     'api_key'         => "{{ ureport_client_open311.api_key      }}"
 ];
 
-define('GOOGLE_MAPS_API_KEY', '{{ ureport_client_google_api_key }}');
+define('GOOGLE_MAPS_API_KEY',  '{{ ureport_client_google_api_key }}');
+define('RECAPTCHA_SITE_KEY',   '{{ ureport_client_recaptcha.site_key   }}');
+define('RECAPTCHA_SECRET_KEY', '{{ ureport_client_recaptcha.secret_key }}');
 
 define('DATE_FORMAT',    'n/j/Y');
 define('TIME_FORMAT',    'g:i a');

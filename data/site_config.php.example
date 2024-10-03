@@ -28,7 +28,9 @@ $UREPORT = [
     'api_key'         => ''
 ];
 
-define('GOOGLE_MAPS_API_KEY', '');
+define('GOOGLE_MAPS_API_KEY',  '');
+define('RECAPTCHA_SITE_KEY',   '');
+define('RECAPTCHA_SECRET_KEY', '');
 
 /**
  * Specify the theme directory

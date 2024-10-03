@@ -1,16 +1,17 @@
 {
     "require": {
         "php": ">=8.1",
-        "aura/di":                         "@stable",
-        "aura/router":                     "@stable",
-        "apereo/phpcas":                   "@stable",
-        "guzzlehttp/guzzle":               "@stable",
-        "graylog2/gelf-php":               "^1",
-        "laminas/laminas-log":             "@stable",
-        "twig/twig":                       "@stable"
+        "aura/di":              "@stable",
+        "aura/router":          "@stable",
+        "apereo/phpcas":        "@stable",
+        "google/recaptcha":     "@stable",
+        "guzzlehttp/guzzle":    "@stable",
+        "graylog2/gelf-php":    "^1",
+        "laminas/laminas-log":  "^2.17",
+        "twig/twig":            "@stable"
     },
     "require-dev": {
-        "phpunit/phpunit":                 "@stable"
+        "phpunit/phpunit":      "@stable"
     },
     "autoload": {
         "psr-4": {
