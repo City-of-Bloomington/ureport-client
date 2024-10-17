@@ -8,6 +8,11 @@ declare (strict_types=1);
 $ROUTES = new Aura\Router\RouterContainer(BASE_URI);
 $map    = $ROUTES->getMap();
 
+$map->attach('rental_complaints.', '', function ($r) {
+    $r->get('contact', '/{group_code}/1',        Web\RentalComplaints\ContactInfoController::class)->allows(['POST']);
+    $r->get('request', '/{group_code}/1/fields', Web\RentalComplaints\ServiceRequestController::class)->allows(['POST']);
+});
+
 $map->attach('home.', '', function ($r) {
     $r->get('help',   '/help',                                Web\Controllers\HelpController::class);
     $r->get('success', '/success',                            Web\Controllers\SuccessController::class);
