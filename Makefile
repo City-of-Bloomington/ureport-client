@@ -20,7 +20,8 @@ default: clean compile package
 
 clean:
 	rm -Rf build/${APPNAME}*
-	for f in $(shell find public/css -name '*-*.css'   ); do rm $$f; done
+	for f in $(shell find public/css -name '*-*.css*'); do rm $$f; done
+	for f in $(shell find public/js  -name '*-*.js'  ); do rm $$f; done
 
 compile: $(CSS)
 	cd $(LANGUAGES) && msgfmt -cv *.po
