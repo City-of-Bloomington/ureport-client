@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2020 City of Bloomington, Indiana
+ * @copyright 2020-2026 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  */
 declare (strict_types=1);
@@ -30,10 +30,8 @@ include APPLICATION_HOME.'/src/Web/container.php';
 include APPLICATION_HOME.'/src/Web/routes.php';
 
 if (defined('GRAYLOG_DOMAIN') && defined('GRAYLOG_PORT')) {
-    $graylog = new Web\GraylogWriter(GRAYLOG_DOMAIN, GRAYLOG_PORT);
-    $logger  = new Laminas\Log\Logger();
-    $logger->addWriter($graylog);
-    Laminas\Log\Logger::registerErrorHandler($logger);
-    Laminas\Log\Logger::registerExceptionHandler($logger);
-    Laminas\Log\Logger::registerFatalErrorShutdownFunction($logger);
+    $graylog = new \Web\GraylogWriter(GRAYLOG_DOMAIN, GRAYLOG_PORT);
+             set_error_handler([$graylog, 'error'    ]);
+         set_exception_handler([$graylog, 'exception']);
+    register_shutdown_function([$graylog, 'shutdown' ]);
 }

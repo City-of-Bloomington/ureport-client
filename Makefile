@@ -36,7 +36,3 @@ package:
 	[[ -d build ]] || mkdir build
 	rsync -rl --exclude-from=buildignore . build/${APPNAME}
 	cd build && tar czf ${APPNAME}-${VERSION}.tar.gz ${APPNAME}
-
-dockerfile:
-	docker build build/blossom -t ${DOCKER_REPO}/${APPNAME}:${VERSION}-${COMMIT}
-	docker push ${DOCKER_REPO}/${APPNAME}:${VERSION}-${COMMIT}
