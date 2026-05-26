@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2024 City of Bloomington, Indiana
+ * @copyright 2024-2026 City of Bloomington, Indiana
  * @license https://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  */
 declare (strict_types=1);
@@ -10,7 +10,7 @@ use Web\View;
 
 class ChooseGroupView extends View
 {
-    public function __construct(array $groups, array $results, string $query=null)
+    public function __construct(array $groups, array $results, ?string $query=null)
     {
         parent::__construct();
         $this->vars = [

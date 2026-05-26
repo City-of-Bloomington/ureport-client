@@ -1,0 +1,5 @@
+parameters:
+  bootstrapFiles:
+    - src/Test/bootstrap.php
+  paths:
+    - src/Web

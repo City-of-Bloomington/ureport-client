@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2023 City of Bloomington, Indiana
+ * @copyright 2023-2026 City of Bloomington, Indiana
  * @license https://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  */
 declare (strict_types=1);
@@ -61,8 +61,6 @@ class Open311Gateway
 
 	/**
 	 * Returns only the services matching the given group
-	 *
-	 * @return array An array of Service information
 	 */
 	public function getGroupServices(string $group): array
 	{
@@ -117,7 +115,7 @@ class Open311Gateway
 	 * @param  array    $file   $_FILES entry for file upload
 	 * @return array    JSON response from Open311 server
 	 */
-	public function postServiceRequest(array $post, array $file=null): array
+	public function postServiceRequest(array $post, ?array $file=null): array
 	{
 		$request = [
 			'jurisdiction_id' => $this->jurisdiction_id,
@@ -161,7 +159,6 @@ class Open311Gateway
 		else {
 			return $json;
 		}
-		return [];
 	}
 
 	/**
@@ -171,7 +168,7 @@ class Open311Gateway
 	 * Instead, you must flatten the multidimensional arrays into
 	 * simple fieldname strings
 	 */
-	private function flatten_request_array(array $request, string $prefix=null): array
+	private function flatten_request_array(array $request, ?string $prefix=null): array
 	{
 		$out = [];
 		foreach ($request as $key=>$value) {
@@ -204,6 +201,5 @@ class Open311Gateway
 		else {
 			throw new \Exception('endpoints/open311ServerUnReachable');
 		}
-		return [];
 	}
 }

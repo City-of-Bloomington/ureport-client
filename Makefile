@@ -1,7 +1,3 @@
-include make.conf
-# Variables from make.conf:
-#
-# DOCKER_REPO
 SHELL := /bin/bash
 APPNAME := ureport-client
 VERSION := $(shell cat VERSION | tr -d "[:space:]")
@@ -16,7 +12,7 @@ SASS := $(shell find . -name screen.scss -not -path '*/build/*')
 CSS := $(patsubst %.scss, %-$(VERSION).css, $(SASS))
 
 
-default: clean compile package
+default: test clean compile package
 
 clean:
 	rm -Rf build/${APPNAME}*
@@ -30,7 +26,7 @@ $(CSS): $(SASS)
 	cd $(@D) && sassc -t compact -m screen.scss screen-${VERSION}.css
 
 test:
-	vendor/phpunit/phpunit/phpunit -c src/Test/Unit.xml
+	vendor/bin/phpstan analyse -l 5
 
 package:
 	[[ -d build ]] || mkdir build
