@@ -27,7 +27,7 @@ class GraylogWriter
 
         $message = new Message();
         $message->setLevel(LogLevel::ERROR);
-        if (!empty($event['message'])) { $message->setShortMessage($event['message']); }
+        $message->setShortMessage($event['message'] ?? '');
         if (!empty($event['file'   ])) { $message->setAdditional('file', $event['file']); }
         if (!empty($event['line'   ])) { $message->setAdditional('line', $event['line']); }
 

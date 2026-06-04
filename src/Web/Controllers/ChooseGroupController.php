@@ -67,7 +67,6 @@ class ChooseGroupController extends Controller
 
         $results = [];
         $json    = $open311->getServiceRequest($ticket_id);
-        error_log(print_r($json, true));
         if ($json && !empty($json[0]['service_request_id'])) {
             $results[] = [
                 'service_request_id' => $json[0]['service_request_id'],
