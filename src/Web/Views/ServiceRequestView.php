@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2024 City of Bloomington, Indiana
+ * @copyright 2026 City of Bloomington, Indiana
  * @license https://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  */
 declare (strict_types=1);
@@ -24,7 +24,11 @@ class ServiceRequestView extends View
             'first_name'          => $_SESSION['first_name'] ?? '',
             'last_name'           => $_SESSION['last_name' ] ?? '',
             'email'               => $_SESSION['email'     ] ?? '',
-            'phone'               => $_SESSION['phone'     ] ?? ''
+            'phone'               => $_SESSION['phone'     ] ?? '',
+            'description'         => $_POST['description'   ] ?? '',
+            'address_string'      => $_POST['address_string'] ?? '',
+            'lat'                 => !empty($_POST['lat' ]) ? (float)$_POST['lat' ] : '',
+            'long'                => !empty($_POST['long']) ? (float)$_POST['long'] : '',
         ];
         if (isset($_SESSION['errorMessages'])) {
             foreach ($_SESSION['errorMessages'] as $e) {
