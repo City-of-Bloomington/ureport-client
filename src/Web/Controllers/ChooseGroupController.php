@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2024 City of Bloomington, Indiana
+ * @copyright 2024-2026 City of Bloomington, Indiana
  * @license https://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  */
 declare (strict_types=1);
@@ -25,19 +25,23 @@ class ChooseGroupController extends Controller
             ];
         }
 
-        $results = [];
-        if (!empty($_GET['query']) && strlen($_GET['query']) >= self::MIN_QUERY_LENGTH) {
-            $results = is_numeric($_GET['query'])
-                     ? $this->search_tickets ((int)$_GET['query'], $open311)
-                     : $this->search_services(     $_GET['query'], $groups);
+        $q   = null;
+        $res = [];
+        if (      !empty($_GET['query'])
+            && is_string($_GET['query'])
+            &&    strlen($_GET['query']) >= self::MIN_QUERY_LENGTH) {
+
+            $q   = preg_replace('/[^\w\x20]/', '', $_GET['query']);
+            $res = is_numeric($q) ? $this->tickets ((int)$q, $open311)
+                                  : $this->services(     $q, $groups);
         }
 
         return isset($_GET['partial'])
-               ? new \Web\Views\SearchResultsView($results, $_GET['query'])
-               : new \Web\Views\ChooseGroupView($groups, $results, $_GET['query'] ?? null);
+               ? new \Web\Views\SearchResultsView($res, $q)
+               : new \Web\Views\ChooseGroupView($groups, $res, $q);
     }
 
-    private function search_services(string $query, array $groups): array
+    private function services(string $query, array $groups): array
     {
         $q       = strtolower($query);
         $results = [];
@@ -61,10 +65,8 @@ class ChooseGroupController extends Controller
         return $results;
     }
 
-    private function search_tickets(int $ticket_id, Open311Gateway $open311): array
+    private function tickets(int $ticket_id, Open311Gateway $open311): array
     {
-        global $UREPORT;
-
         $results = [];
         $json    = $open311->getServiceRequest($ticket_id);
         if ($json && !empty($json[0]['service_request_id'])) {
