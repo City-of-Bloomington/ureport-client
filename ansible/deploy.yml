@@ -3,6 +3,8 @@
   become: "yes"
   roles:
     - "City-of-Bloomington.php"
+  vars:
+    app_name: 'ureport-client'
 
   tasks:
     - name: "Create directories"
@@ -23,10 +25,16 @@
         dest: "{{ ureport_client_install_path | dirname }}"
       register: "release"
 
+    - name: 'Configure php-fpm pool'
+      ansible.builtin.template:
+        src: 'php-fpm-pool.conf'
+        dest: "/etc/php/{{ php_version.stdout }}/fpm/pool.d/{{ app_name }}.conf"
+      notify: 'php-fpm-restart'
+
     - name: "Apache configuration"
       ansible.builtin.template:
         src:  "apache.conf"
-        dest: "/etc/apache2/sites-enabled/conf.d/ureport_client.conf"
+        dest: "/etc/apache2/sites-enabled/conf.d/{{ app_name }}.conf"
       notify: "apache_restart"
 
     - name: "Install site_config"
