@@ -31,11 +31,9 @@ class ServiceRequestView extends View
             'long'                => !empty($_POST['long']) ? (float)$_POST['long'] : '',
         ];
         if (isset($_SESSION['errorMessages'])) {
-            foreach ($_SESSION['errorMessages'] as $e) {
-                $this->vars['errorMessages'][] = $e->getMessage();
-            }
+            $this->vars['errorMessages'] = $_SESSION['errorMessages'];
+            unset($_SESSION['errorMessages']);
         }
-        unset($_SESSION['errorMessages']);
     }
 
     public function render(): string

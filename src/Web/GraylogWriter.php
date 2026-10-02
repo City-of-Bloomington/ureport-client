@@ -49,6 +49,7 @@ class GraylogWriter
             'line'    => $line
         ];
         self::doWrite($e);
+        return true;
     }
 
     public function exception($e)
@@ -67,6 +68,6 @@ class GraylogWriter
     public function shutdown()
     {
         $e = error_get_last();
-        if ($e) { self::doWrite($e); }
+        if ($e && !empty($e['message'])) { self::doWrite($e); }
     }
 }

@@ -1,12 +1,6 @@
-# Translation
-# Copyright 2020 City of Bloomington
-# This file is distributed under the same license as Monroe
-#
-domain "errors"
-
 msgid ""
 msgstr ""
-"Project-Id-Version: Monroe\n"
+"Project-Id-Version: ureport-client\n"
 "Report-Msgid-Bugs-To: dev@bloomington.in.gov\n"
 "Last-Translator: Cliff Ingham <inghamn@bloomington.in.gov>\n"
 "Language-Team: City of Bloomington <dev@bloomington.in.gov>\n"
@@ -23,3 +17,8 @@ msgstr "You are not logged into this site anymore."
 msgid "users/unknownUser"
 msgstr "You do not have a user account for this application"
 
+msgid "file/uploadTooLarge"
+msgstr "The image you uploaded was too large"
+
+msgid "file/uploadFailed"
+msgstr "An error occurred while uploading the image"

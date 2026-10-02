@@ -20,7 +20,11 @@ clean:
 	for f in $(shell find public/js  -name '*-*.js'  ); do rm $$f; done
 
 compile: $(CSS)
-	cd $(LANGUAGES) && msgfmt -cv *.po
+	for f in $(LANGUAGES); do \
+		msgfmt -cv $$f/errors.po -o $$f/errors.mo; \
+		msgfmt -cv $$f/labels.po -o $$f/labels.mo; \
+		msgfmt -cv $$f/messages.po -o $$f/messages.mo; \
+	done
 	for f in ${JAVASCRIPT}; do cp $$f $${f%.js}-${VERSION}.js; done
 
 $(CSS): $(SASS)

@@ -1,11 +1,6 @@
-# Translation
-# Copyright (C) 2020 City of Bloomington
-# This file is distributed under the same license as the Monroe application.
-domain "messages"
-
 msgid ""
 msgstr ""
-"Project-Id-Version: Monroe\n"
+"Project-Id-Version: ureport-client\n"
 "Report-Msgid-Bugs-To: dev@bloomington.in.gov\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Cliff Ingham <inghamn@bloomington.in.gov>\n"
