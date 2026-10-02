@@ -35,12 +35,10 @@ class ServiceRequestController extends \Web\Controller
                                     $_SESSION['errorMessages'][] = 'file/uploadTooLarge';
                                     break;
                                 case UPLOAD_ERR_NO_FILE:
-                                    echo "No file uploaded\n";
                                     $json = $open311->postServiceRequest($_POST);
                                     $res  = $json[0];
                                     break;
                                 case UPLOAD_ERR_OK:
-                                    echo "File uploaded\n";
                                     $json = $open311->postServiceRequest($_POST, $_FILES['media']);
                                     $res  = $json[0];
                                     break;
