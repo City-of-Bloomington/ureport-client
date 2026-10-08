@@ -1,51 +1,67 @@
 <?php
 /**
- * @copyright 2006-2024 City of Bloomington, Indiana
+ * @copyright 2006-2025 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  */
 namespace Web;
 
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
+use Twig\Extra\Markdown\MarkdownExtension;
+use Twig\Extra\Markdown\MichelfMarkdown;
+use Twig\Extra\Markdown\MarkdownRuntime;
+use Twig\RuntimeLoader\RuntimeLoaderInterface;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFunction;
 use Twig\TwigTest;
 
 abstract class View
 {
-    protected $vars;
+    protected $vars         = [];
     protected $twig;
     public    $outputFormat = 'html';
 
-	abstract public function render(): string;
+    abstract public function render();
 
-	/**
-	 * Configures the gettext translations
-	 */
-	public function __construct()
-	{
-        $this->outputFormat = (!empty($_REQUEST['format']) && self::isValidFormat($_REQUEST['format']))
-                            ? $_REQUEST['format']
-                            : 'html';
-
+    public function __construct()
+    {
+        $this->outputFormat = !empty($_REQUEST['format']) ? $_REQUEST['format'] : 'html';
         $tpl = [];
+
         if (defined('THEME')) {
-            if (is_dir ( SITE_HOME.'/Themes/'.THEME.'/templates')) {
-                $tpl[] = SITE_HOME.'/Themes/'.THEME.'/templates';
+            $dir = SITE_HOME.'/Themes/'.THEME;
+
+            if (is_dir ( "$dir/templates")) {
+                $tpl[] = "$dir/templates";
             }
         }
+
         $tpl[]      = APPLICATION_HOME.'/templates';
         $loader     = new FilesystemLoader($tpl);
-        $this->twig = new Environment($loader, [ 'cache'            => false,
-                                                 'strict_variables' => true,
-                                                 'debug'            => true]);
+        $this->twig = new Environment($loader, ['cache'            => false,
+                                                'strict_variables' => true,
+                                                'debug'            => true]);
+
+        global $REQUEST, $ROUTE;
+
         $this->twig->addGlobal('APPLICATION_NAME', APPLICATION_NAME);
         $this->twig->addGlobal('VERSION',          VERSION);
         $this->twig->addGlobal('BASE_URL',         BASE_URL);
         $this->twig->addGlobal('BASE_URI',         BASE_URI);
-        $this->twig->addGlobal('REQUEST_URI',      $_SERVER['REQUEST_URI']);
+        $this->twig->addGlobal('USWDS_URL',        USWDS_URL);
+        $this->twig->addGlobal('REQUEST',          $REQUEST);
+        $this->twig->addGlobal('ROUTE_NAME',       $ROUTE ? $ROUTE->name : null);
+        $this->twig->addGlobal('DATE_FORMAT',      DATE_FORMAT);
+        $this->twig->addGlobal('TIME_FORMAT',      TIME_FORMAT);
+        $this->twig->addGlobal('DATETIME_FORMAT',  DATETIME_FORMAT);
+        $this->twig->addGlobal('LANG',             strtolower(substr(LOCALE, 0, 2)));
+
         if (isset($_SESSION['USER'])) {
             $this->twig->addGlobal('USER', $_SESSION['USER']);
+        }
+        if (isset($_SESSION['errorMessages'])) {
+            $this->twig->addGlobal('ERROR_MESSAGES', $_SESSION['errorMessages']);
+            unset($_SESSION['errorMessages']);
         }
         $this->twig->addExtension(new DebugExtension());
 
@@ -54,63 +70,74 @@ abstract class View
         $this->twig->addFunction(new TwigFunction('url',         [$this, 'generateUrl']));
         $this->twig->addFunction(new TwigFunction('isAllowed',   [$this, 'isAllowed'  ]));
         $this->twig->addFunction(new TwigFunction('current_url', [$this, 'current_url']));
-
-        $locale = LOCALE.'.utf8';
-        $this->twig->addGlobal('LANG', strtolower(substr(LOCALE, 0, 2)));
-        putenv("LC_ALL=$locale");
-        setlocale(LC_ALL, $locale);
-        bindtextdomain('labels',   APPLICATION_HOME.'/language');
-        bindtextdomain('messages', APPLICATION_HOME.'/language');
-        bindtextdomain('errors',   APPLICATION_HOME.'/language');
-        textdomain('labels');
-	}
-
-	/**
-     * Twig templates are organized by output format.  So, a format is valid
-     * if there is a directory of twig templates matching the format name.
-     */
-	private static function isValidFormat(string $format): bool
-    {
-        $dir = glob(APPLICATION_HOME.'/templates/*', GLOB_ONLYDIR);
-        foreach ($dir as $d) {
-            if ($format == basename($d)) { return true; }
-        }
-        return false;
     }
 
-	/**
-	 * Cleans strings for output
-	 *
-	 * There are more bad characters than htmlspecialchars deals with.  We just want
-	 * to add in some other characters to clean.  While here, we might as well
-	 * have it trim out the whitespace too.
-	 *
-	 * @param  array|string $input
-	 * @param  int          $quotes Optional, the desired constant to use for the htmlspecidalchars call
-	 * @return string
-	 */
-	public static function escape($input, $quotes=ENT_QUOTES)
-	{
-		if (is_array($input)) {
-			foreach ($input as $key=>$value) {
-				$input[$key] = self::escape($value,$quotes);
-			}
-		}
-		else {
-			$input = htmlspecialchars(trim($input), $quotes, 'UTF-8');
-		}
+    /**
+     * Magic Method for setting object properties
+     *
+     * @param string $key
+     * @param mixed $value
+     */
+    public function __set($key,$value) {
+        $this->vars[$key] = $value;
+    }
+    /**
+     * Magic method for getting object properties
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        if (isset($this->vars[$key])) {
+            return $this->vars[$key];
+        }
+        return null;
+    }
 
-		return $input;
-	}
+    /**
+     * @param string $key
+     * @return boolean
+     */
+    public function __isset($key) {
+        return array_key_exists($key,$this->vars);
+    }
 
-	/**
-	 * Reverses the escaping done by View::escape()
-	 *
-	 * @param array|string $input
-	 * @return string
-	 */
-	public static function unescape($input)
-	{
+    /**
+     * Cleans strings for output
+     *
+     * There are more bad characters than htmlspecialchars deals with.  We just want
+     * to add in some other characters to clean.  While here, we might as well
+     * have it trim out the whitespace too.
+     *
+     * @param  array|string $input
+     * @param  int          $quotes Optional, the desired constant to use for the htmlspecidalchars call
+     * @return string
+     */
+    public static function escape($input, $quotes=ENT_QUOTES)
+    {
+        if ($input) {
+            if (is_array($input)) {
+                foreach ($input as $key=>$value) {
+                    $input[$key] = self::escape($value,$quotes);
+                }
+            }
+            else {
+                $input = htmlspecialchars(trim($input), $quotes, 'UTF-8');
+            }
+        }
+
+        return $input;
+    }
+
+    /**
+     * Reverses the escaping done by View::escape()
+     *
+     * @param array|string $input
+     * @return string
+     */
+    public static function unescape($input)
+    {
         if (is_array($input)) {
             foreach ($input as $key=>$value) {
                 $input[$key] = self::unescape($value);
@@ -120,7 +147,7 @@ abstract class View
             $input = htmlspecialchars_decode(trim($input), ENT_QUOTES);
         }
         return $input;
-	}
+    }
 
     /**
      * Returns the gettext translation of msgid
@@ -135,7 +162,7 @@ abstract class View
      * @param string $domain Alternate domain
      * @return string
      */
-    public function translate($msgid, $domain=null)
+    public static function translate($msgid, $domain=null)
     {
         if (is_array($msgid)) {
             return $domain
@@ -143,6 +170,7 @@ abstract class View
                 : ngettext (         $msgid[0], $msgid[1], $msgid[2]);
         }
         else {
+            if (strlen($msgid) > 64) { return $msgid; }
             return $domain
                 ? dgettext($domain, $msgid)
                 : gettext (         $msgid);
@@ -152,9 +180,9 @@ abstract class View
     /**
      * Alias of $this->translate()
      */
-    public function _($msgid, $domain=null)
+    public static function _($msgid, $domain=null)
     {
-        return $this->translate($msgid, $domain);
+        return self::translate($msgid, $domain);
     }
 
     public static $supportedDateFormatStrings = [
@@ -199,35 +227,47 @@ abstract class View
      * generate function on it.
      *
      * @see https://github.com/auraphp/Aura.Router/tree/2.x
-     * @param string $route_name
-     * @param array $params
-     * @return string
      */
-    public static function generateUri($route_name, $params=[])
+    public static function generateUri(string $route_name, ?array $route_params=[], ?array $query_params=null): string
     {
-        static $helper = null;
-        if (!$helper) {
-            global $ROUTES;
-            $helper = $ROUTES->newRouteHelper();
+        global $ROUTES;
+        $helper = $ROUTES->newRouteHelper();
+        $uri    = $helper($route_name, $route_params);
+        return $query_params ? $uri.'?'.http_build_query($query_params) : $uri;
+    }
+    public static function generateUrl(string $route_name, ?array $route_params=[], ?array $query_params=[]): string
+    {
+        return "https://".BASE_HOST.self::generateUri($route_name, $route_params, $query_params);
+    }
+    public static function current_url(): string
+    {
+        global $REQUEST;
+
+        $url = $REQUEST->getUri()->getPath();
+        $p   = self::current_query_params();
+        if ($p) {
+            $url.='?'.http_build_query($p);
         }
-        return $helper($route_name, $params);
-    }
-    public static function generateUrl($route_name, $params=[])
-    {
-        return "https://".BASE_HOST.self::generateUri($route_name, $params);
-    }
-    public static function current_url(): Url
-    {
-        return new Url(Url::current_url(BASE_HOST));
+        return $url;
     }
 
-	public static function isAllowed(string $resource, ?string $action=null): bool
+    public static function current_query_params(): array
     {
-		global $ACL;
-		$role = 'Anonymous';
-		if (isset  ($_SESSION['USER']) && $_SESSION['USER']->role) {
-			$role = $_SESSION['USER']->role;
-		}
-		return $ACL->isAllowed($role, $resource, $action);
+        $p = [];
+        if ($_SERVER['QUERY_STRING']) {
+            $s = preg_replace('/[^a-zA-Z0-9\=\;\&\+]/', '', $_SERVER['QUERY_STRING']);
+            parse_str($s, $p);
+        }
+        return $p;
+    }
+
+    public static function isAllowed(string $resource, ?string $action=null): bool
+    {
+        global $ACL;
+        $role = 'Anonymous';
+        if (isset  ($_SESSION['USER']) && $_SESSION['USER']->getRole()) {
+            $role = $_SESSION['USER']->getRole();
+        }
+        return $ACL->isAllowed($role, $resource, $action);
     }
 }

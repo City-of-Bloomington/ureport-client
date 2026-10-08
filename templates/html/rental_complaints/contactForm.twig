@@ -1,47 +1,52 @@
 {#
- * @copyright 2024 City of Bloomington, Indiana
+ * @copyright 2024-2026 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  * @param array  service             Open311 Service information array
  * @param string group_code
  #}
 {% extends "html/layouts/default.twig" %}
+{% import  "html/macros/forms.twig" as forms %}
 {% block content %}
-<section class="container my-3">
-    <header class="d-flex flex-wrap-reverse">
-        <h1 class="me-auto align-self-center">{{ service.group }}</h1>
-        <nav class="d-flex" aria-label="Report Steps">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="{{ uri('home.index') }}">1</a>
-                <li class="page-item"><a class="page-link" href="{{ uri('home.service', {'group_code':group_code}) }}">2</a>
-                <li class="page-item active"  ><a class="page-link">3</a>
-                <li class="page-item disabled"><a class="page-link">4</a>
+<section>
+    <header>
+        <h1>{{ service.group }}</h1>
+        <nav           class="usa-step-indicator usa-step-indicator--counters-sm">
+            <ol        class="usa-step-indicator__segments">
+                <li    class="usa-step-indicator__segment usa-step-indicator__segment--complete">
+                    <a class="usa-step-indicator__segment-label" href="{{ uri('home.index') }}">
+                        Group <span class="usa-sr-only">completed</span>
+                    </a>
+                </li>
+                <li    class="usa-step-indicator__segment usa-step-indicator__segment--complete">
+                    <a class="usa-step-indicator__segment-label" href="{{ uri('home.service', { group_code:group_code }) }}">
+                        Service <span class="usa-sr-only">completed</span>
+                    </a>
+                </li>
+                <li    class="usa-step-indicator__segment usa-step-indicator__segment--current">
+                    <a class="usa-step-indicator__segment-label">
+                        Contact Info
+                    </a>
+                </li>
+                <li    class="usa-step-indicator__segment">
+                    <a class="usa-step-indicator__segment-label">
+                        Request Details <span class="usa-sr-only">not completed</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
     <h2>{{ service.service_name }}</h2>
     <p>{{ service.description  }}</p>
-    <form method="post">
-        <fieldset>
-            <legend>Your Information</legend>
+    <form class="usa-form usa-form--large" method="post">
+        <fieldset class="usa-fieldset">
+            <legend class="usa-legend">Your Information</legend>
             <p>Note: <i>Information you provide through uReport is stored and retained by the City as a public record.</i></p>
+            {{ forms.field_text('first_name', 'first_name', 'First Name:', null, true )}}
+            {{ forms.field_text('last_name',  'last_name',  'Last Name:' , null, true )}}
+            {{ forms.field_text('phone',      'phone',      'Phone:'     , null, true )}}
+            {{ forms.field_text('email',      'email',      'Email:'     , null, true )}}
 
-            <div class="mb-3">
-                <label  for="first_name" class="form-label">First Name:</label>
-                <input name="first_name" id="first_name" class="form-control" required="true" />
-            </div>
-            <div class="mb-3">
-                <label for="last_name" class="form-label">Last Name:</label>
-                <input name="last_name" id="last_name" class="form-control" required="true" />
-            </div>
-            <div class="mb-3">
-                <label for="phone" class="form-label">Phone:</label>
-                <input name="phone" id="phone" type="tel" class="form-control" required="true" />
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email:</label>
-                <input name="email" id="email" type="email" class="form-control" required="true" />
-            </div>
-            <button type="submit" class="btn btn-primary">Next</button>
+            {{ forms.button('submit', 'Next', 'submit') }}
         </fieldset>
     </form>
 </section>

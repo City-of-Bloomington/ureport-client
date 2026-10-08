@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2024 City of Bloomington, Indiana
+ * @copyright 2024-2026 City of Bloomington, Indiana
  * @license https://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  */
 declare (strict_types=1);
@@ -19,7 +19,7 @@ class ContactInfoController extends \Web\Controller
                 foreach (['first_name', 'last_name', 'email', 'phone'] as $f) {
                     $_SESSION[$f] = $_POST[$f];
                 }
-                $requestForm  = \Web\View::generateUrl('rental_complaints.request', [
+                $requestForm  = \Web\View::generateUrl('home.request', [
                     'group_code'   => $params['group_code'  ],
                     'service_code' => self::RENTAL_COMPLAINTS
                 ]);

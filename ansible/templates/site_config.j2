@@ -14,6 +14,7 @@ define('BASE_HOST', isset($_SERVER['HTTP_X_FORWARDED_HOST'])
                         ? $_SERVER['HTTP_X_FORWARDED_HOST']
                         : "{{ ansible_host }}");
 define('BASE_URL' , "https://".BASE_HOST.BASE_URI);
+define('USWDS_URL', '/static/uswds/dist');
 
 $UREPORT = [
     'url'             => "{{ ureport_client_open311.url          }}",

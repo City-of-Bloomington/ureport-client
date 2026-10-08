@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ LANG }}" lang="{{ LANG }}">
 {{ include('html/layouts/partials/head.twig') }}
-<body class="min-vh-100 vstack">
-    {{ include('html/layouts/partials/nav.twig') }}
-	<main class="container p-2 flex-grow-1">
-            {% if errorMessages is defined %}
-            {{ include('html/layouts/partials/errorMessages.twig') }}
-            {% endif %}
 
-            {% block content %}
-            {% endblock %}
+<body class="display-flex flex-column minh-viewport">
+    <a class="usa-skipnav" href="#main-content">Skip to main content</a>
+    {{ include('html/layouts/partials/gov-banner.twig') }}
+    <div class="usa-overlay"></div>
+    {{ include('html/layouts/partials/nav.twig') }}
+    <main id="main-content" class="flex-1 tablet:padding-bottom-10">
+        <div class="grid-container">
+        {% if ERROR_MESSAGES is defined %}
+        {{ include('html/layouts/partials/errorMessages.twig') }}
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+        </div>
 	</main>
     {{ include('html/layouts/partials/footer.twig') }}
+    {{ include('html/layouts/partials/identifier.twig') }}
+    <script src="{{ USWDS_URL }}/js/uswds.min.js"></script>
 </body>
 </html>

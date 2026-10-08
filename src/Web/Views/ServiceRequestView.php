@@ -13,6 +13,9 @@ class ServiceRequestView extends View
     public function __construct(array $service, array $definition, string $group_code)
     {
         parent::__construct();
+
+        list($maxSize, $maxBytes) = self::maxUpload();
+
         $this->vars = [
             'service'             => $service,
             'attributes'          => $definition['attributes'] ?? null,
@@ -29,6 +32,9 @@ class ServiceRequestView extends View
             'address_string'      => $_POST['address_string'] ?? '',
             'lat'                 => !empty($_POST['lat' ]) ? (float)$_POST['lat' ] : '',
             'long'                => !empty($_POST['long']) ? (float)$_POST['long'] : '',
+            'accept'              => 'image/*',
+            'maxBytes'            => $maxBytes,
+            'maxSize'             => $maxSize
         ];
         if (isset($_SESSION['errorMessages'])) {
             $this->vars['errorMessages'] = $_SESSION['errorMessages'];
@@ -39,5 +45,39 @@ class ServiceRequestView extends View
     public function render(): string
     {
         return $this->twig->render("{$this->outputFormat}/requestForm.twig", $this->vars);
+    }
+
+    /**
+     * Return the max size upload allowed in PHP ini
+     *
+     * This returns both a human readable size string as well as the raw
+     * number of bytes.
+     */
+    public static function maxUpload(): array
+    {
+        $upload_max_size  = ini_get('upload_max_filesize');
+        $post_max_size    = ini_get('post_max_size');
+        $upload_max_bytes = self::bytes($upload_max_size);
+        $post_max_bytes   = self::bytes(  $post_max_size);
+
+        if ($upload_max_bytes < $post_max_bytes) {
+            $maxSize  = $upload_max_size;
+            $maxBytes = $upload_max_bytes;
+        }
+        else {
+            $maxSize  = $post_max_size;
+            $maxBytes = $post_max_bytes;
+        }
+        return [$maxSize, $maxBytes];
+    }
+
+    public static function bytes(string $size): int
+    {
+        switch (substr($size, -1)) {
+            case 'MB': return (int)$size * 1048576;
+            case 'KB': return (int)$size * 1024;
+            case 'GB': return (int)$size * 1073741824;
+            default:  return (int)$size;
+        }
     }
 }

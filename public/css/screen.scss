@@ -1,6 +1,12 @@
-#media:invalid { background-color: #600; }
+#map_container {
+    position: relative; height: 320px;
+    > img {
+        width: 32px; height: 32px;
+        position: absolute; top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
 
-a[class="current"] { font-weight: bold; }
-a[inert] { color: gray; }
+#map { height: 100%; }
 
-summary::-webkit-details-marker { display: none; }
+#service_request_form .usa-search--small { display: flex; }

@@ -1,36 +1,35 @@
-<nav class="navbar navbar-expand-lg shadow-sm">
-    <div class="container">
-        <div class="navbar-brand d-md-none">
-            <a class="navbar-brand"  href="https://bloomington.in.gov/" aria-label="Official Homepage of the City of Bloomington, Indiana">
-                <img src="https://bloomington.in.gov/static/snowflake-blue.svg" alt="City of Bloomington Logo" height="55" class="d-inline-block align-text-center">
-            </a>
-            <a class="navbar-brand" href="{{ BASE_URI }}">
-                {{ APPLICATION_NAME }}
-            </a>
+<header class="usa-header usa-header--basic">
+    <div class="usa-nav-container">
+
+        <div class="usa-navbar">
+            <div class="usa-logo">
+                <a class="grid-row" href="{{ BASE_URI }}" title="City of Bloomington, Indiana>">
+                    <img src="//bloomington.in.gov/static/snowflake-blue.svg"
+                         alt="City of Bloomington Logo"
+                         class="grid-col-auto maxh-5 margin-right-105" />
+                    <em class="usa-logo__text font-sans-lg grid-col-auto margin-y-auto">{{ APPLICATION_NAME }}</em>
+                </a>
+            </div>
         </div>
-        <div class="navbar-brand d-none d-md-block">
-            <a class="navbar-brand"  href="https://bloomington.in.gov/" aria-label="Official Homepage of the City of Bloomington, Indiana">
-                <img src="https://bloomington.in.gov/static/cob-logo-horizontal.svg" alt="City of Bloomington Logo" style="padding-right:5%;" height="55" class="d-inline-block align-text-center">
-            </a>
-            <a class="navbar-brand" href="{{ BASE_URI }}">
-                {{ APPLICATION_NAME }}
-            </a>
-        </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav-menu" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="nav-menu">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="https://bloomington.in.gov/crm/tickets">Search Tickets</a>
+
+        <nav aria-label="Primary navigation" class="usa-nav">
+            <ul class="usa-nav__primary usa-accordion">
+                <li class="usa-nav__primary-item">
+                    <a href="https://bloomington.in.gov/crm/tickets" class="usa-nav-link">Search Tickets</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ BASE_URI }}/help">Help</a>
+                <li class="usa-nav__primary-item">
+                    <a href="{{ uri('home.help') }}"
+                       class="usa-nav-link {{ ROUTE_NAME=='home.help' ? 'usa-current' : '' }}">
+                        Help
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ BASE_URI }}/miscellaneous/53">Feedback</a>
+                <li class="usa-nav__primary-item">
+                    <a  href="{{ uri('home.contact', {group_code:'miscellaneous', service_code:53}) }}"
+                       class="usa-nav-link">
+                       Feedback
+                    </a>
                 </li>
             </ul>
-        </div>
+        </nav>
     </div>
-</nav>
+</header>

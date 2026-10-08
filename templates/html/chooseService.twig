@@ -1,5 +1,5 @@
 {#
- * @copyright 2024 City of Bloomington, Indiana
+ * @copyright 2024-2026 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  * @param array  services    Open311 service information
  * @param string group_name
@@ -8,29 +8,58 @@
 {% extends "html/layouts/default.twig" %}
 
 {% block content %}
-<section id="chooseService" class="container my-3">
-    <header class="d-flex flex-wrap-reverse">
-        <h1 class="me-auto align-self-center">{{ group_name }}</h1>
-        <nav class="d-flex" aria-label="Report Steps">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="{{ uri('home.index') }}">1</a></li>
-                <li class="page-item active"  ><a class="page-link">2</a></li>
-                <li class="page-item disabled"><a class="page-link">3</a></li>
-                <li class="page-item disabled"><a class="page-link">4</a></li>
+<section id="chooseService">
+    <header>
+        <h1>{{ group_name }}</h1>
+        <nav           class="usa-step-indicator usa-step-indicator--counters-sm">
+            <ol        class="usa-step-indicator__segments">
+                <li    class="usa-step-indicator__segment usa-step-indicator__segment--complete">
+                    <a class="usa-step-indicator__segment-label" href="{{ uri('home.index') }}">
+                        Group <span class="usa-sr-only">completed</span>
+                    </a>
+                </li>
+                <li    class="usa-step-indicator__segment usa-step-indicator__segment--current">
+                    <a class="usa-step-indicator__segment-label">
+                        Service
+                    </a>
+                </li>
+                <li    class="usa-step-indicator__segment">
+                    <a class="usa-step-indicator__segment-label">
+                        Contact Info <span class="usa-sr-only">not completed</span>
+                    </a>
+                </li>
+                <li    class="usa-step-indicator__segment">
+                    <a class="usa-step-indicator__segment-label">
+                        Request Details <span class="usa-sr-only">not completed</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
-    <div class="list-group">
-    {% for s in services %}
-        <a href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':group_code}) }}"
-           class="list-group-item list-group-item-action">
-           {{ s.service_name }}
-        </a>
-    {% endfor %}
-    </div>
-    <details class="my-3">
-        <summary class="fst-italic text-decoration-underline" style="list-style:none;">Can't find what you're looking for?</summary>
-        <span class="text-center">You may send an e-mail directly to <a href="mailto:info@bloomington.in.gov">info@bloomington.in.gov</a>, or call the City at <a href="tel:812-349-3400">812.349.3400</a>.</span>
-    </details>
+    <ul class="usa-card-group">
+        {% for s in services %}
+        <li             class="usa-card grid-col-12">
+            <div        class="usa-card__container">
+                <div    class="usa-card__header">
+                    <h4 class="usa-card__heading">{{ s.service_name }}</h4>
+                </div>
+                <div class="usa-card__body">
+                    <p>{{ s.description }}</p>
+                </div>
+                <div class="usa-card__footer">
+                    <a class="usa-button" href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':s.group}) }}">
+                        Request
+                    </a>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Can't find what you're looking for?</h2>
+    <p>You may send an e-mail directly to
+       <a href="mailto:info@bloomington.in.gov">info@bloomington.in.gov</a>,
+       or call the City at <a href="tel:812-349-3400">812.349.3400</a>.
+    </p>
 </section>
 {% endblock %}

@@ -8,9 +8,6 @@ K := $(foreach r, ${REQS}, $(if $(shell command -v ${r} 2> /dev/null), '', $(err
 
 LANGUAGES := $(wildcard language/*/LC_MESSAGES)
 JAVASCRIPT := $(shell find public -name '*.js' ! -name '*-*.js')
-SASS := $(shell find . -name screen.scss -not -path '*/build/*')
-CSS := $(patsubst %.scss, %-$(VERSION).css, $(SASS))
-
 
 default: test clean compile package
 
@@ -19,7 +16,8 @@ clean:
 	for f in $(shell find public/css -name '*-*.css*'); do rm $$f; done
 	for f in $(shell find public/js  -name '*-*.js'  ); do rm $$f; done
 
-compile: $(CSS)
+compile:
+	cd public/css && sassc -t compact -m screen.scss screen-${VERSION}.css
 	for f in $(LANGUAGES); do \
 		msgfmt -cv $$f/errors.po -o $$f/errors.mo; \
 		msgfmt -cv $$f/labels.po -o $$f/labels.mo; \
@@ -27,8 +25,6 @@ compile: $(CSS)
 	done
 	for f in ${JAVASCRIPT}; do cp $$f $${f%.js}-${VERSION}.js; done
 
-$(CSS): $(SASS)
-	cd $(@D) && sassc -t compact -m screen.scss screen-${VERSION}.css
 
 test:
 	vendor/bin/phpstan analyse -l 5

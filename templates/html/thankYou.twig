@@ -5,13 +5,13 @@
  #}
 {% extends "html/layouts/default.twig" %}
 {% block content %}
-<section class="jumbotron">
+<section>
     <header>
         <h1>Thanks for the report!</h1>
         <h2>Service Request ID: {{ service_request_id }}</h2>
     </header>
     <a href="https://bloomington.in.gov/crm/tickets/view?ticket_id={{ service_request_id }}"
-       class="btn btn-primary" role="button">
+       class="usa-button" role="button">
        View Ticket
     </a>
 </section>

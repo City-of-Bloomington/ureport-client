@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2024 City of Bloomington, Indiana
+ * @copyright 2024-2026 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  */
 declare (strict_types=1);
@@ -10,7 +10,6 @@ $map    = $ROUTES->getMap();
 
 $map->attach('rental_complaints.', '', function ($r) {
     $r->get('contact', '/{group_code}/1',        Web\RentalComplaints\ContactInfoController::class)->allows(['POST']);
-    $r->get('request', '/{group_code}/1/fields', Web\RentalComplaints\ServiceRequestController::class)->allows(['POST']);
 });
 
 $map->attach('home.', '', function ($r) {

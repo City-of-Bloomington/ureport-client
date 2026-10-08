@@ -1,5 +1,5 @@
 {#
- * @copyright 2024 City of Bloomington, Indiana
+ * @copyright 2024-2026 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  * @param array  groups
  * @param array  searchResults
@@ -8,46 +8,68 @@
 {% extends "html/layouts/default.twig" %}
 
 {% block content %}
-<section class="container">
+<section>
     <header>
         <h1>Report an Issue</h1>
-        <div class="alert alert-secondary" role="alert">
-            <p><strong>Non-Emergency Use Only:</strong> This system is not for reporting emergencies or imminent safety hazards. If this is an emergency, please dial 9-1-1.</p>
-            <p class="mb-1"><strong>Public Record:</strong> Information you provide through uReport is stored and retained by the City as a public record.</p>
+        <div class="usa-alert usa-alert--info">
+            <div class="usa-alert__body">
+                <h2 class="usa-alert__heading">Non-Emergency Use Only:</h2>
+                <p>This system is not for reporting emergencies or imminent safety hazards. If this is an emergency, please dial 9-1-1.</p>
+            </div>
+        </div>
+        <div class="usa-alert usa-alert--info">
+            <div class="usa-alert__body">
+                <h2 class="usa-alert__heading">Public Record:</h2>
+                <p>Information you provide through uReport is stored and retained by the City as a public record.</p>
+            </div>
         </div>
     </header>
-    <form>
-        <fieldset>
-            <legend>Search</legend>
-            <div class="mb-1">
-                <label class="form-label" for="query">Type to search for services or a ticket</label>
-                <input class="form-control" name="query" id="query" value="{{ query }}" placeholder="Example: Removal or #000000" />
-            </div>
-            <div id="searchResults" class="list-group mb-2">
-                    {% if searchResults %}{{ include('html/partials/searchResults.twig') }}{% endif %}
-            </div>
-        </fieldset>
+
+    <p>Type to search for services or a ticket</p>
+    <form class="usa-search" role="search">
+        <label  for="query" class="usa-sr-only">Search</label>
+        <input name="query" class="usa-input" type="search"
+                    id="query" value="{{ query }}" placeholder="Example: Removal or #000000" />
+        <button class="usa-button" type="submit">
+            <span class="usa-search__submit-text">Search</span>
+            <img  class="usa-search__submit-icon" alt="search"
+                    src="{{ USWDS_URL }}/assets/img/usa-icons-bg/search--white.svg" />
+        </button>
     </form>
+    <div id="searchResults">
+        {% if searchResults %}{{ include('html/partials/searchResults.twig') }}{% endif %}
+    </div>
+
     <h2>Select a Service Type</h2>
+    <div class="usa-accordion">
         {% for code, group in groups %}
-        <details class="d-flex mb-3">
-            <summary class="btn btn-primary p-sm-3 flex-wrap flex-sm-wrap justify-content-center justify-content-md-start align-items-center">
-                <img src="{{ 'https://bloomington.in.gov/static/ureport-client/' ~ code ~ '.svg' }}" role="img" aria-hidden="true" class="m-sm-3 m-1" style="width: 5em;">
-                <div class="flex-column align-items-center align-items-md-start">
-                    <h3>{{ group.name }}</h3>
-                </div>
-            </summary>
-            <div class="list-group mt-1">
-            {% for s in group.services %}
-                <a href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':code}) }}"
-                class="list-group-item list-group-item-action">
-                    <h4>{{ s.service_name }}</h4>
-                    <p>{{ s.description }}</p>
-                </a>
-            {% endfor %}
-            </div>
-        </details>
+        <h3 class="usa-accordion__heading">
+            <button class="usa-accordion__button" type="button" aria-controls="{{ code }}">{{ group.name }}</button>
+        </h3>
+        <div class="usa-accordion__content" id="{{ code }}">
+            <ul class="usa-card-group">
+                {% for s in group.services %}
+                <li class="usa-card grid-col-12">
+                    <div class="usa-card__container">
+                        <div class="usa-card__header">
+                            <h4 class="usa-card__heading">{{ s.service_name }}</h4>
+                        </div>
+                        <div class="usa-card__body">
+                            <p>{{ s.description }}</p>
+                        </div>
+                        <div class="usa-card__footer">
+                            <a class="usa-button" href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':code}) }}">
+                                Request
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
         {% endfor %}
+    </div>
 </section>
 <script src="{{ BASE_URI }}/js/search-{{ VERSION }}.js"></script>
 {% endblock %}
