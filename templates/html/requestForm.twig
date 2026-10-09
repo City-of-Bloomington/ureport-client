@@ -89,25 +89,25 @@
             <legend class="usa-legend--large">{{ service.service_name }} information:</legend>
             {% for a in attributes %}
             <div>
-                <label for="{{ a.code }}" class="form-label">{{ a.description }}:</label>
-                 {% if a.datatype=="string" %}
-                 <input name="{{ a.code }}" id="{{ a.code }}" {{ a.required ? 'required="true"' : '' }}  class="form-control" />
-                 {% elseif a.datatype=="text" %}
-                 <textarea name="{{ a.code }}" id="{{ a.code }}" {{ a.required ? 'required="true"' : '' }} class="form-control"></textarea>
-                 {% elseif a.datatype=="number" %}
-                 <input name="{{ a.code }}" id="{{ a.code }}" type="number" {{ a.required ? 'required="true"' : '' }} class="form-control" />
-                 {% elseif a.datatype=="datetime" %}
-                 <input name="{{ a.code }}" id="{{ a.code }}" type="datetime" {{ a.required ? 'required="true"' : '' }} class="form-control" />
-                 {% else %}
-                 <select name="{{ a.code }}" id="{{ a.code }}" class="form-control"
-                         {{ a.datatype=="multivaluelist" ? 'multiple="true"' : '' }}
-                         {{ a.required ? 'required="true"' : '' }}>
+                {% if a.datatype=="string" %}
+                {{ forms.field_text(a.code, a.code, a.description, null, a.required) }}
+                {% elseif a.datatype=="text" %}
+                {{ forms.field_textarea(a.code, a.code, a.description, null, a.required) }}
+                {% elseif a.datatype=="number" %}
+                {{ forms.field_number(a.code, a.code, a.description, null, a.required) }}
+                {% elseif a.datatype=="datetime" %}
+                {{ forms.field_datetime(a.code, a.code, a.description, null, a.required) }}
+                {% else %}
+                <label class="usa-label" for="{{ a.code }}">{{ a.description }}{{ a.required ? ' <span>*</span>' : '' }}</label>
+                <select id="{{ a.code }}" name="{{ a.code }}" class="usa-select"
+                        {{- a.required ? ' required="true"' : '' }}
+                        {{- a.datatype=="multivaluelist" ? ' multiple="true"' : '' }}>
                     {{ a.datatype=='singlevaluelist' ? '<option value="">--Please choose an option--</option>' : '' }}
                     {% for f in a.values %}
                     <option value="{{ f.key }}">{{ f.name }}</option>
                     {% endfor %}
-                 </select>
-                 {% endif %}
+                </select>
+                {% endif %}
             </div>
             {% endfor %}
         </fieldset>
