@@ -128,6 +128,16 @@
         {%- for k,v in attr %} {{ k }}="{{ v }}" {% endfor %} />
 {% endmacro %}
 
+{% macro field_datetime(id, name, label, value, required=false, attr={}, help=null) %}
+    <label class="usa-label" for="{{ id }}">{{ label }}{{ required ? ' <span>*</span>' : ' <span>(optional)</span>' }}</label>
+    {% if help %}<div class="usa-hint" id="{{ id }}-help">{{ help|raw }}</div>{% endif %}
+    <input id="{{ id }}" name="{{ name }}" value="{{ value }}" type="datetime-local"
+        class="usa-input usa-input--medium"
+        {{- required ? ' required="true"' : '' }}
+        {%- if help %} aria-describedby="{{ id  }}-help"{% endif %}
+        {%- for k,v in attr %} {{ k }}="{{ v }}" {% endfor %} />
+{% endmacro %}
+
 {% macro field_textarea(id, name, label, value, required=false, attr={}, help=null) %}
     <label class="usa-label" for="{{ id }}">{{ label }}{{ required ? ' <span>*</span>' : '' }}</label>
     {% if help %}<div class="usa-hint" id="{{ id }}-help">{{ help|raw }}</div>{% endif %}
@@ -145,7 +155,7 @@
     <label class="usa-label" for="{{ id }}">{{ label }}{{ required ? ' <span>*</span>' : '' }}</label>
     {% if help %}<span class="usa-hint" id="{{ id }}-help">{{ help|raw }}</span>{% endif %}
     <input class="usa-file-input" id="{{ id }}" name="{{ name }}" type="file"
-        accepts="{{ accept }}" size="{{ maxBytes }}"
+        accepts="{{ accept }}" data-maxsize="{{ maxSize }}" data-maxbytes="{{ maxBytes }}"
         data-errorMessage="Please upload a single {{ accept }} file that is not larger than {{ maxSize }}."
         {{- required ? ' required="true"' : '' }}
         {%- if help %} aria-describedby="{{ id  }}-help"{% endif %}

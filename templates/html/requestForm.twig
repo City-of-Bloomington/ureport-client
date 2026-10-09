@@ -80,8 +80,7 @@
             <legend class="usa-legend--large">General information:</legend>
             {{ forms.field_textarea('description', 'description', 'Describe the issue:', description, true) }}
             {{ forms.field_file('media', 'media', 'Include Image', null,
-                                accept, maxSize, maxBytes, false, {},
-                                accept ~ ' - ' ~ maxSize) }}
+                                accept, maxSize, maxBytes, false, {}, media_help) }}
         </fieldset>
 
         {% if attributes %}

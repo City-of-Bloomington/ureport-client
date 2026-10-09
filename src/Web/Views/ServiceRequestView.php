@@ -14,6 +14,7 @@ class ServiceRequestView extends View
     {
         parent::__construct();
 
+        $accept = '.jpg,.png';
         list($maxSize, $maxBytes) = self::maxUpload();
 
         $this->vars = [
@@ -32,9 +33,10 @@ class ServiceRequestView extends View
             'address_string'      => $_POST['address_string'] ?? '',
             'lat'                 => !empty($_POST['lat' ]) ? (float)$_POST['lat' ] : '',
             'long'                => !empty($_POST['long']) ? (float)$_POST['long'] : '',
-            'accept'              => 'image/*',
+            'accept'              => $accept,
             'maxBytes'            => $maxBytes,
-            'maxSize'             => $maxSize
+            'maxSize'             => $maxSize,
+            'media_help'          => "Accepted file types: $accept<br />An error will be thrown if the selected file is greater than $maxSize"
         ];
         if (isset($_SESSION['errorMessages'])) {
             $this->vars['errorMessages'] = $_SESSION['errorMessages'];
@@ -61,11 +63,11 @@ class ServiceRequestView extends View
         $post_max_bytes   = self::bytes(  $post_max_size);
 
         if ($upload_max_bytes < $post_max_bytes) {
-            $maxSize  = $upload_max_size;
+            $maxSize  = $upload_max_size.'B';
             $maxBytes = $upload_max_bytes;
         }
         else {
-            $maxSize  = $post_max_size;
+            $maxSize  = $post_max_size.'B';
             $maxBytes = $post_max_bytes;
         }
         return [$maxSize, $maxBytes];
@@ -74,9 +76,9 @@ class ServiceRequestView extends View
     public static function bytes(string $size): int
     {
         switch (substr($size, -1)) {
-            case 'MB': return (int)$size * 1048576;
-            case 'KB': return (int)$size * 1024;
-            case 'GB': return (int)$size * 1073741824;
+            case 'M': return (int)$size * 1048576;
+            case 'K': return (int)$size * 1024;
+            case 'G': return (int)$size * 1073741824;
             default:  return (int)$size;
         }
     }
