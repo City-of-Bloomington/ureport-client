@@ -42,10 +42,10 @@
             <legend class="usa-legend">Your Information</legend>
             <p>By leaving the fields below empty, <strong>you may submit anonymously</strong>.</p>
             <p>Note: <i>Information you provide through uReport is stored and retained by the City as a public record.</i></p>
-            {{ forms.field_text('first_name', 'first_name', 'First Name:' )}}
-            {{ forms.field_text('last_name',  'last_name',  'Last Name:'  )}}
-            {{ forms.field_text('phone',      'phone',      'Phone:'      )}}
-            {{ forms.field_text('email',      'email',      'Email:'      )}}
+            {{ forms.field_text('first_name', 'first_name', 'First Name:', '' )}}
+            {{ forms.field_text('last_name',  'last_name',  'Last Name:' , '' )}}
+            {{ forms.field_text('phone',      'phone',      'Phone:'     , '' )}}
+            {{ forms.field_text('email',      'email',      'Email:'     , '' )}}
 
             {{ forms.button('submit', 'Next', 'submit') }}
         </fieldset>
