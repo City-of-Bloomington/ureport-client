@@ -63,14 +63,10 @@
                 <img src="{{ BASE_URI }}/css/img/crosshairs.svg" />
             </div>
 
-            <h3>Address:</h3>
-            <div class="usa-search usa-search--small">
-                <label  for="address_string" class="usa-sr-only">Search</label>
-                <input name="address_string" class="usa-input" type="search"
+            <h3><label for="address_string">Address:</label></h3>
+            <div>
+                <input name="address_string" class="usa-input"
                          id="address_string" />
-                <button class="usa-button" type="submit">
-                    <img src="{{ USWDS_URL }}/img/usa-icons-bg/search--white.svg" class="usa-search__submit-icon" alt="Search" />
-                </button>
                 <input name="lat"  id="lat"  type="hidden" value="{{ lat  }}" />
                 <input name="long" id="long" type="hidden" value="{{ long }}" />
             </div>
