@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2006-2025 City of Bloomington, Indiana
+ * @copyright 2006-2026 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE
  */
 namespace Web;
@@ -63,13 +63,23 @@ abstract class View
             $this->twig->addGlobal('ERROR_MESSAGES', $_SESSION['errorMessages']);
             unset($_SESSION['errorMessages']);
         }
-        $this->twig->addExtension(new DebugExtension());
 
         $this->twig->addFunction(new TwigFunction('_'  ,         [$this, 'translate'  ]));
         $this->twig->addFunction(new TwigFunction('uri',         [$this, 'generateUri']));
         $this->twig->addFunction(new TwigFunction('url',         [$this, 'generateUrl']));
         $this->twig->addFunction(new TwigFunction('isAllowed',   [$this, 'isAllowed'  ]));
         $this->twig->addFunction(new TwigFunction('current_url', [$this, 'current_url']));
+
+        $this->twig->addExtension(new DebugExtension());
+        $this->twig->addExtension(new MarkdownExtension());
+        $this->twig->addRuntimeLoader(new class implements RuntimeLoaderInterface {
+            public function load($class) {
+                if (MarkdownRuntime::class === $class) {
+                    return new MarkdownRuntime(new MichelfMarkdown());
+                }
+                return null;
+            }
+        });
     }
 
     /**

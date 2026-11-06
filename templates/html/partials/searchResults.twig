@@ -14,7 +14,7 @@
             </div>
             <div class="usa-card__body">
                 <p>{{ s.status }} {{ s.requested_datetime | date('m/d/Y') }} {{ s.agency_responsible }}</p>
-                <p>{{ s.description }}</p>
+                <p>{{ s.description|markdown_to_html }}</p>
             </div>
             <div class="usa-card__footer">
                 <a class="usa-button" href="https://bloomington.in.gov/crm/tickets/view?ticket_id={{ s.service_request_id }}">
@@ -30,7 +30,7 @@
                 <h4 class="usa-card__heading">{{ s.service_name }}</h4>
             </div>
             <div class="usa-card__body">
-                <p>{{ s.description }}</p>
+                <p>{{ s.description|markdown_to_html }}</p>
             </div>
             <div class="usa-card__footer">
                 <a class="usa-button" href="{{ uri('home.contact', {'service_code':s.service_code, 'group_code':s.group_code}) }}">

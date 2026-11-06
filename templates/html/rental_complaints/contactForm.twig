@@ -36,7 +36,7 @@
         </nav>
     </header>
     <h2>{{ service.service_name }}</h2>
-    <p>{{ service.description  }}</p>
+    <p>{{ service.description|markdown_to_html }}</p>
     <form class="usa-form usa-form--large" method="post">
         <fieldset class="usa-fieldset">
             <legend class="usa-legend">Your Information</legend>
@@ -44,7 +44,9 @@
             {{ forms.field_text('first_name', 'first_name', 'First Name:', null, true )}}
             {{ forms.field_text('last_name',  'last_name',  'Last Name:' , null, true )}}
             {{ forms.field_text('phone',      'phone',      'Phone:'     , null, true )}}
-            {{ forms.field_text('email',      'email',      'Email:'     , null, true )}}
+            {{ forms.field_text('email',      'email',      'Email:'     , null, true, {},
+               'All documents related to the complaint inspection will be emailed to the tenant at the address provided on this form' )
+            }}
 
             {{ forms.button('submit', 'Next', 'submit') }}
         </fieldset>

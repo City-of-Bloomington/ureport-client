@@ -7,7 +7,9 @@
         "google/recaptcha":     "@stable",
         "guzzlehttp/guzzle":    "@stable",
         "graylog2/gelf-php":    "@stable",
-        "twig/twig":            "@stable"
+        "michelf/php-markdown": "@stable",
+        "twig/twig":            "@stable",
+        "twig/markdown-extra":  "@stable"
     },
     "require-dev": {
         "phpunit/phpunit":      "@stable",
