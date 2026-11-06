@@ -36,7 +36,7 @@
         </nav>
     </header>
     <h2>{{ service.service_name }}</h2>
-    <p>{{ service.description|markdown_to_html }}</p>
+    {% if service.description %}{{ service.description|markdown_to_html }}{% endif %}
     <form class="usa-form usa-form--large" method="post">
         <fieldset class="usa-fieldset">
             <legend class="usa-legend">Your Information</legend>
