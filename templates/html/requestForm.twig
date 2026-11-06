@@ -90,6 +90,8 @@
                 {{ forms.field_textarea(a.code, a.code, a.description, null, a.required) }}
                 {% elseif a.datatype=="number" %}
                 {{ forms.field_number(a.code, a.code, a.description, null, a.required) }}
+                {% elseif a.datatype=="date" %}
+                {{ forms.field_date(a.code, a.code, a.description, null, a.required) }}
                 {% elseif a.datatype=="datetime" %}
                 {{ forms.field_datetime(a.code, a.code, a.description, null, a.required) }}
                 {% else %}
